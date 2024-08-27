@@ -1,0 +1,92 @@
+@import '../../Colors/Color.scss';
+
+.Container {
+    display: flex;
+    flex-direction: column;
+}
+
+.topContainer {
+    margin-top: 44px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.AlbumsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.Title {
+    display: none;
+}
+
+.responsiveTitle {
+    display: flex;
+    font-size: 32px;
+    line-height: 38.73px;
+    font-weight: 500;
+    margin-left: 20px;
+    gap: 10px;
+    color: $white;
+}
+
+@media screen and (min-width: 1920px) {
+    .Search {
+        width: 704px;
+        margin-left: 208px;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+
+    .Title {
+        display: flex;
+        font-size: 32px;
+        line-height: 38.73px;
+        font-weight: 500;
+        margin-top: 32px;
+        margin-left: 32.08px;
+        gap: 10px;
+        color: $white;
+    }
+
+    .responsiveTitle {
+        display: none;
+        margin-top: 40px;
+    }
+
+    .AlbumsContainer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        justify-content: center;
+        margin-top: 18px;
+    }
+
+    .AlbumsContainer {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media screen and (max-width: 390px) {
+    .Search {
+        width: 300px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .Search {
+        width: 607px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .AlbumsContainer {
+        width: 100%;
+        height: 100%;
+    }
+}

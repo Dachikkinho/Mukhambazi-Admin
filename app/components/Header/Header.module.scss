@@ -1,0 +1,17 @@
+@import '../../Colors/Color.scss';
+
+.heading {
+    display: flex;
+    font-size: 32px;
+    line-height: 38.73px;
+    font-weight: 500;
+    gap: 10px;
+    color: #ffffff;
+    align-items: center;
+}
+
+.headingCont {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

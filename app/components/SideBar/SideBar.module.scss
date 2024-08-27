@@ -1,0 +1,57 @@
+@import '../../Colors/Color.scss';
+
+.sidebar {
+    max-width: 300px;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    padding: 20px;
+    border-right: 2px solid $thirdColor;
+    transition: all 0.6s;
+    z-index: 10;
+    position: sticky;
+    left: 0;
+    align-self: flex-start;
+
+    opacity: 1;
+    mix-blend-mode: hard-light;
+    background-image: url('/images/sidebar-image.svg');
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: inherit;
+
+    flex-shrink: 0;
+    background-color: #7f257dae;
+    opacity: 1;
+
+    mix-blend-mode: hard-light;
+}
+
+.wrapper {
+    max-width: 207px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 600px) {
+    .sidebar {
+        position: fixed;
+        max-width: 100%;
+        backdrop-filter: blur(30px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        left: -100%;
+        background-size: cover;
+        opacity: 0.9;
+
+        &.active {
+            left: 0;
+            width: 100%;
+        }
+    }
+}
+
+.navSection {
+    margin: 54px 0;
+}

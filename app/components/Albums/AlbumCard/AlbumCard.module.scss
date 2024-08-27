@@ -1,0 +1,51 @@
+@import '../../../Colors/Color.scss';
+
+.artists {
+    display: flex;
+    align-items: center;
+}
+
+.containers {
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.containers:hover {
+    transform: scale(0.96);
+    filter: brightness(85%);
+}
+
+.spans {
+    display: flex;
+    justify-content: space-between;
+    max-width: 512px;
+    width: 100%;
+}
+
+.firstspan {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 29.05px;
+    text-align: left;
+    color: $purple-600;
+}
+
+.default {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 29.05px;
+    text-align: left;
+    color: $white;
+}
+
+.img {
+    max-width: 512px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    height: 256px;
+}

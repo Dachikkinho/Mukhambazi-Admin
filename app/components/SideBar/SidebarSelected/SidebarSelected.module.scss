@@ -1,0 +1,64 @@
+@import '../../../Colors/Color.scss';
+
+.main {
+    width: 265px;
+    height: 45px;
+    position: absolute;
+    background-color: transparent;
+    z-index: 1;
+    border: 2px solid #a93797;
+    border-right: none;
+    right: -2px;
+    background-color: #808080;
+    border-radius: 25px 0 0 26px;
+    transition: top 0.2s;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: -21.6px;
+        right: 0.5px;
+        border-right: 2px solid $thirdColor;
+        border-bottom: 2px solid $thirdColor;
+        border-bottom-right-radius: 15px;
+        z-index: 3;
+        background-color: transparent;
+        box-shadow: 1px 9px 0px 1px gray;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        bottom: -21.6px;
+        right: 0.5px;
+        border-right: 2px solid $thirdColor;
+        border-bottom: 2px solid $thirdColor;
+        border-bottom-right-radius: 15px;
+        z-index: 3;
+        background-color: transparent;
+        box-shadow: 1px 9px 0px 1px gray;
+        transform: rotate(-90deg);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .main {
+        transform: translate(-50%, 0);
+        left: 50%;
+        border: 2px solid $thirdColor;
+        border-radius: 20px;
+        backdrop-filter: blur(20px);
+
+        &::before {
+            display: none;
+        }
+
+        &::after {
+            display: none;
+        }
+    }
+}

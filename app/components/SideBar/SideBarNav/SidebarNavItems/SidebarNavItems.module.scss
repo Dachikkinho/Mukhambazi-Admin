@@ -1,0 +1,23 @@
+.link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    width: fit-content;
+    position: relative;
+    z-index: 2;
+
+    p {
+        font-family: var(--third-family);
+        font-weight: 590;
+        line-height: 140%;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 20px;
+    }
+
+    &:hover p {
+        color: #ff00d5;
+    }
+}

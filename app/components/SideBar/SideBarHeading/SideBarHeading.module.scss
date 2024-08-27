@@ -1,0 +1,15 @@
+@import '../../../Colors/Color.scss';
+
+.heading {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 22px;
+    color: $white;
+    text-align: left;
+}
+
+@media screen and (max-width: 600px) {
+    .heading {
+        text-align: left;
+    }
+}

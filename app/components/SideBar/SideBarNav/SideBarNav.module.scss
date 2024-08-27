@@ -1,0 +1,25 @@
+@import '../../../Colors/Color.scss';
+
+.mainCont {
+    position: relative;
+    max-width: 160px;
+    width: 100%;
+    margin-top: 18px;
+}
+
+@media screen and (max-width: 600px) {
+    .mainCont {
+        margin: 0 auto;
+        margin-top: 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.linksWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    list-style: none;
+}
