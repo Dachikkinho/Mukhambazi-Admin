@@ -46,7 +46,9 @@ a {
     padding: 0 0 116px 0;
     min-width: 0;
 }
-
+::selection {
+    background: #8b2ca8;
+}
 @media screen and (max-width: 1300px) {
     .children-container {
         padding: 50px 0 116px 0;
