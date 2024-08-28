@@ -18,6 +18,11 @@ export const isPlayingState = atom({
     },
 });
 
+export const isAdminState = atom({
+    key: "isAdmin",
+    default: true
+})
+
 //albums placeholder
 export const albumsState = atom({
     key: 'album',
