@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
 import styles from './Search.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type Props = {
     placeholder: string;
@@ -13,6 +13,9 @@ type Props = {
 };
 
 const Search = ({ placeholder, icon, width, height, value }: Props) => {
+    useEffect(() => {
+        document.title = 'Chakrulos - Web Player: Music for everyone';
+    }, []);
     const router = useRouter();
     const [searchText, setSearchText] = useState(value || '');
 
