@@ -2,7 +2,8 @@ import { useState } from 'react';
 import styles from './CreatePopUp.module.scss';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import Done from '../Done/Done';
+import { Done } from '../Done/Done';
+
 
 interface Props {
     closeMenuFunction: () => void;

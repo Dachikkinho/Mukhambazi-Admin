@@ -1,8 +1,8 @@
 .select {
-    background: #cf3b92;
+    background: #612766;
     border-radius: 10px;
-    padding: 12px 64px;
-    max-width: 281px;
+    padding: 11px 8px;
+    max-width: 90%;
     width: 100%;
     height: 63px;
     font-family: var(--font-family);
@@ -11,6 +11,7 @@
     color: #fff;
     border: none;
     cursor: pointer;
+    margin-bottom: 50px;
 
     * {
         cursor: pointer;
