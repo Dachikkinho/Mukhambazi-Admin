@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ArtistSelect } from '@/app/components/addArtistSubComponents/ArtistSelect';
 import { FormStatus } from '@/app/components/addArtistSubComponents/FormStatus';
 import { CreateAuthor } from '@/app/interfaces/createAuthor.interface';
 import { ArtistImageInput } from './ArtistImageInput';

@@ -9,7 +9,7 @@ export const ArtistSelect = ({ onChange }: Props) => (
         <option selected value="/addArtist">
             Add New Artist
         </option>
-        <option value="/addAlbum">Album</option>
-        <option value="/addMusic">Musics</option>
+        <option value="/addAlbum">Add New Album</option>
+        <option value="/addMusic">Add New Music</option>
     </Select>
 );

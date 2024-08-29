@@ -2,9 +2,9 @@
 
 import styles from './page.module.scss';
 import { useEffect, useState } from 'react';
-import { ArtistSelect } from '@/app/components/addArtistSubComponents/ArtistSelect';
+import { AlbumSelect } from '@/app/components/addAlbumSubComponents/AlbumSelect';
 import { useRouter } from 'next/navigation';
-import ArtistForm from '@/app/components/addArtistSubComponents/ArtistForm';
+import AlbumForm from '@/app/components/addAlbumSubComponents/AlbumForm';
 
 export default function AddArtist() {
     const router = useRouter();
@@ -19,9 +19,9 @@ export default function AddArtist() {
 
     return (
         <div className={styles.mainWrapper}>
-            <ArtistSelect onChange={onChange} />
+            <AlbumSelect onChange={onChange} />
             <div className={styles.container}>
-                <ArtistForm />
+                <AlbumForm />
             </div>
         </div>
     );
