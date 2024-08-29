@@ -114,7 +114,7 @@ const TopArtist = () => {
                                 name={`${artist.firstName} ${artist.lastName}`}
                                 bgColor={''}
                                 img={artist.image}
-                                plays={'2'}
+                                plays={'10594'}
                             />
                         </Link>
                     ),
