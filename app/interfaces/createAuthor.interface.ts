@@ -1,5 +1,4 @@
-export interface Artist {
-    id: number;
+export interface CreateAuthor {
     firstName: string;
     lastName: string;
     biography: string;
