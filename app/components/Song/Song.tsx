@@ -10,7 +10,7 @@ type Props = {
     duration: string;
 };
 
-const Song = ({
+const Music = ({
     songName,
     artistName,
     banner,
@@ -39,4 +39,4 @@ const Song = ({
     );
 };
 
-export default Song;
+export default Music;

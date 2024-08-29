@@ -28,6 +28,9 @@ const SidebarSelected = () => {
             case '/favorites':
                 setPosition('496px');
                 break;
+            case '/addArtist':
+                setPosition('623px');
+                break;
             default:
                 setPosition('179px');
         }

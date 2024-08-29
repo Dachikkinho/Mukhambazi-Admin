@@ -11,13 +11,15 @@ import AlbumCard from '@/app/components/Albums/AlbumCard/AlbumCard';
 import Link from 'next/link';
 import LoadingBar from 'react-top-loading-bar';
 import { useSearchParams } from 'next/navigation';
+import { Album } from '@/app/interfaces/album.interface';
+import { Music } from '@/app/interfaces/music.interface';
 
 const SearchPage = () => {
     useEffect(() => {
         document.title = 'Chakrulos - Web Player: Music for everyone';
     }, []);
 
-    const [songs, setSongs] = useState<Song[]>([]);
+    const [songs, setSongs] = useState<Music[]>([]);
     const [progress, setProgress] = useState(0);
     const [albums, setAlbums] = useState<Album[]>([]);
     const [, setIsPlaying] = useRecoilState(isPlayingState);
@@ -38,6 +40,8 @@ const SearchPage = () => {
                 },
             })
             .then((res) => {
+                console.log(res);
+                
                 setSongs([...res.data.music]);
                 setAlbums([...res.data.album]);
             })

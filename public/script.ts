@@ -54,6 +54,15 @@ export const forYouItems = [
     },
 ];
 
+export const adminPanel = [
+    {
+        name: "Upload",
+        img: "songs-icon",
+        link: "/addArtist"
+    },
+]
+
+
 // Placeholder until the backend is ready.
 
 export const nextSongPlaceholder = [
