@@ -87,7 +87,7 @@ const ArtistForm = () => {
     };
 
     return uploaded ? (
-        <FormStatus id={id} uploadedName={uploadedName} />
+        <FormStatus id={id || ''} uploadedName={uploadedName} />
     ) : (
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
             <ArtistImageInput register={register} errors={errors} />
