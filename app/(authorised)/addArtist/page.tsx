@@ -10,7 +10,7 @@ import { ErrorMessage } from '@/app/components/ErrorMessage/ErrorMessage';
 import { Select } from '@/app/components/Select/Select';
 import { Done } from '@/app/components/Done/Done';
 
-interface createAuthor {
+interface CreateAuthor {
     firstName: string;
     lastName: string;
     biography: string;
@@ -28,61 +28,62 @@ export default function AddArtist() {
         handleSubmit,
         formState: { errors },
         reset,
-    } = useForm<createAuthor>();
+    } = useForm<CreateAuthor>();
 
     const [uploaded, setUploaded] = useState(false);
     const [uploadedName, setUploadedName] = useState('');
-    const [serverError, setServerError] = useState({});
+    const [serverError, setServerError] = useState<string | null>(null);
     const router = useRouter();
     const param = useSearchParams();
     const id = param.get('id');
 
     useEffect(() => {
         if (id) {
-            axios
-                .get(`http://localhost:3001/authors/${id}`)
-                .then((res) => {
-                    reset(res.data);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+            fetchAuthorData(id);
         }
     }, [id]);
 
-    async function onSubmit(author: createAuthor) {
-        if (id) {
-            try {
-                await axios.patch(
-                    `http://localhost:3001/authors/${id}`,
-                    author,
-                );
-                setUploaded(true);
-                setUploadedName(`${author.firstName} ${author.lastName}`);
-                reset();
-            } catch (err: any) {
-                await err;
-                console.log(err, typeof err);
-                setServerError(err);
-                console.log(serverError);
-            }
-        } else {
-            author.country = 'GE';
-            try {
-                await axios.post('http://localhost:3001/authors/', author);
-                setUploaded(true);
-                setUploadedName(`${author.firstName} ${author.lastName}`);
-                reset();
-            } catch (err: any) {
-                await err;
-                console.log(err, typeof err);
-                setServerError(err);
-                console.log(serverError);
-            }
+    const fetchAuthorData = async (id: string) => {
+        try {
+            const response = await axios.get(
+                `http://localhost:3001/authors/${id}`,
+            );
+            reset(response.data);
+        } catch (error) {
+            handleServerError(error);
         }
-    }
+    };
 
-    const onChange = (e: any) => {
+    const handleServerError = (error: any) => {
+        setServerError('An error occurred while processing your request.');
+    };
+
+    const onSubmit = async (author: CreateAuthor) => {
+        author.country = 'GE';
+
+        try {
+            if (id) {
+                await updateAuthor(id, author);
+            } else {
+                await createAuthor(author);
+            }
+            setUploaded(true);
+            setUploadedName(`${author.firstName} ${author.lastName}`);
+            reset();
+        } catch (error) {
+            handleServerError(error);
+        }
+    };
+
+    const createAuthor = async (author: CreateAuthor) => {
+        await axios.post('http://localhost:3001/authors/', author);
+    };
+
+    const updateAuthor = async (id: string, author: CreateAuthor) => {
+        await axios.patch(`http://localhost:3001/authors/${id}`, author);
+    };
+
+    const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         router.push(e.target.value);
     };
 
@@ -105,7 +106,7 @@ export default function AddArtist() {
                         </h6>
                         <p className={styles.name}>
                             {uploadedName}{' '}
-                            {id ? 'Updated Succesfully!' : 'Added on Platform'}
+                            {id ? 'Updated Successfully!' : 'Added on Platform'}
                         </p>
                     </div>
                 ) : (
@@ -187,10 +188,13 @@ export default function AddArtist() {
                                         value: true,
                                         message: 'Biography is Required!',
                                     },
-                                    minLength: 0,
-                                    maxLength: 100,
+                                    maxLength: {
+                                        value: 100,
+                                        message:
+                                            'Biography should not exceed 100 characters!',
+                                    },
                                 })}
-                            ></input>
+                            />
                             {errors.biography?.message && (
                                 <ErrorMessage
                                     message={errors.biography.message}
