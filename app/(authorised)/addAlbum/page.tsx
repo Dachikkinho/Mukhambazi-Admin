@@ -10,7 +10,7 @@ export default function AddArtist() {
     const router = useRouter();
 
     useEffect(() => {
-        document.title = 'Chakrulos | Add Artist';
+        document.title = 'Chakrulos | AddAlbum';
     }, []);
 
     const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
