@@ -1,19 +1,28 @@
+import { CreateAuthor } from '@/app/interfaces/createAuthor.interface';
 import styles from '../../(authorised)/addArtist/page.module.scss';
 import { ErrorMessage } from '@/app/components/ErrorMessage/ErrorMessage';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
-export const ArtistImageInput = ({ register, errors }) => (
+type Props = {
+    register: UseFormRegister<CreateAuthor>;
+    errors: FieldErrors<CreateAuthor>;
+};
+
+export const ArtistImageInput = ({ register, errors }: Props) => (
     <div className={styles.row}>
         <label htmlFor="img">Artist Image</label>
         <input
-            type="text"
+            type="file"
             id="img"
             className={styles.input}
-            placeholder="Image Url"
+            placeholder="Image"
             {...register('image', {
                 required: { value: true, message: 'Image is Required!' },
-                pattern: {
-                    value: /\.(jpeg|jpg|gif|png|webp|bmp|svg|tiff|ico)$/i,
-                    message: 'Please Enter Valid Image Url!',
+                validate: {
+                    fileType: (file: FileList) =>
+                        ['png', 'jpg', 'jpeg'].includes(
+                            file[0].type.split('/')[1].toLowerCase(),
+                        ) || 'The file type should be Image',
                 },
             })}
         />
