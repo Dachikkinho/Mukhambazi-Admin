@@ -18,8 +18,7 @@ const ArtistForm = () => {
 
     const [uploaded, setUploaded] = useState(false);
     const [uploadedName, setUploadedName] = useState('');
-    const [serverError, setServerError] = useState<string | null>(null);
-    const router = useRouter();
+    const [, setServerError] = useState<string | null>(null);
     const param = useSearchParams();
     const id = param.get('id');
 

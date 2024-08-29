@@ -2,9 +2,9 @@ import styles from '../../(authorised)/addArtist/page.module.scss';
 import { Done } from '@/app/components/Done/Done';
 
 type Props = {
-    id: string,
-    uploadedName: string
-}
+    id: string;
+    uploadedName: string;
+};
 
 export const FormStatus = ({ id, uploadedName }: Props) => (
     <div className={styles.uploadedCont}>

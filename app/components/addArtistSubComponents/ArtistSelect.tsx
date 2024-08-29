@@ -1,8 +1,8 @@
 import { Select } from '@/app/components/Select/Select';
 
 type Props = {
-    onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
-}
+    onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+};
 
 export const ArtistSelect = ({ onChange }: Props) => (
     <Select onChange={onChange}>

@@ -41,7 +41,7 @@ const SearchPage = () => {
             })
             .then((res) => {
                 console.log(res);
-                
+
                 setSongs([...res.data.music]);
                 setAlbums([...res.data.album]);
             })

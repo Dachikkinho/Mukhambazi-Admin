@@ -3,18 +3,23 @@
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { FormStatus } from '@/app/components/addAlbumSubComponents/FormStatus';
 import { CreateAlbum } from '@/app/interfaces/createAlbum.interface';
 import styles from '../../(authorised)/addAlbum/page.module.scss';
 import { AlbumFormFields } from './AlbumFormFields';
 
 const AlbumForm = () => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<CreateAlbum>();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm<CreateAlbum>();
     const [uploaded, setUploaded] = useState(false);
     const [uploadedName, setUploadedName] = useState('');
-    const [serverError, setServerError] = useState<string | null>(null);
-    const router = useRouter();
+    const [, setServerError] = useState<string | null>(null);
+
     const param = useSearchParams();
     const id = param.get('id');
 
@@ -26,7 +31,9 @@ const AlbumForm = () => {
 
     const fetchAlbumData = async (id: string) => {
         try {
-            const response = await axios.get(`http://localhost:3001/albums/${id}`);
+            const response = await axios.get(
+                `http://localhost:3001/albums/${id}`,
+            );
             reset(response.data);
         } catch (error) {
             handleServerError(error);
