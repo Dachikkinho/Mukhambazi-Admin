@@ -13,7 +13,7 @@ const SidebarSelected = () => {
             case '/':
                 setPosition('179px');
                 break;
-            case '/artists':
+                case path.startsWith('/artists') ? path : '':
                 setPosition('228px');
                 break;
             case path.startsWith('/albums') ? path : '':
