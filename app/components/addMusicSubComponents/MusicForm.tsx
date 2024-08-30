@@ -41,11 +41,11 @@ export default function MusicForm() {
     }, [id]);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/album/').then((res) => {
+        axios.get('https://mukhambazi-back.onrender.com/album/').then((res) => {
             setAlbums(res.data);
         });
 
-        axios.get('http://localhost:3001/authors/').then((res) => {
+        axios.get('https://mukhambazi-back.onrender.com/authors/').then((res) => {
             setArtists(res.data);
         });
     }, []);
@@ -54,7 +54,7 @@ export default function MusicForm() {
         try {
             if (id) {
                 await axios.patch(
-                    `http://localhost:3001/music/${id}`,
+                    `https://mukhambazi-back.onrender.com/music/${id}`,
                     {
                         name: music.name,
                         albumId: music.albumId,
@@ -70,7 +70,7 @@ export default function MusicForm() {
                 );
             } else {
                 await axios.post(
-                    `http://localhost:3001/music/`,
+                    `https://mukhambazi-back.onrender.com/music/`,
                     {
                         name: music.name,
                         albumId: music.albumId,
