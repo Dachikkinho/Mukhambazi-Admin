@@ -8,6 +8,10 @@ import { CreateMusic } from '@/app/interfaces/createMusic.interface';
 import { ErrorMessage } from '@/app/components/ErrorMessage/ErrorMessage';
 import { Done } from '@/app/components/Done/Done';
 import styles from '../../(authorised)/addMusic/page.module.scss';
+import AdminSelect from '../MusicSelect/MusicSelect';
+import { Album } from '@/app/interfaces/album.interface';
+import { Artists } from '@/app/interfaces/createArtist.interface';
+import MusicSelect from '../MusicSelect/MusicSelect';
 
 export default function MusicForm() {
     const {
@@ -20,6 +24,8 @@ export default function MusicForm() {
     const [uploadedName, setUploadedName] = useState('');
     const param = useSearchParams();
     const id = param.get('id');
+    const [albums, setAlbums] = useState<Album[]>([]);
+    const [artists, setArtists] = useState<Artists[]>([]);
 
     useEffect(() => {
         if (id) {
@@ -34,12 +40,50 @@ export default function MusicForm() {
         }
     }, [id]);
 
+    useEffect(() => {
+        axios.get('http://localhost:3001/album/').then((res) => {
+            setAlbums(res.data);
+        });
+
+        axios.get('http://localhost:3001/authors/').then((res) => {
+            setArtists(res.data);
+        });
+    }, []);
+
     const onSubmit = async (music: CreateMusic) => {
         try {
             if (id) {
-                await axios.patch(`http://localhost:3001/music/${id}`, music);
+                await axios.patch(
+                    `http://localhost:3001/music/${id}`,
+                    {
+                        name: music.name,
+                        albumId: music.albumId,
+                        authorId: music.authorId,
+                        file: music.file[0],
+                        image: music.image[0],
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    },
+                );
             } else {
-                await axios.post(`http://localhost:3001/music/`, music);
+                await axios.post(
+                    `http://localhost:3001/music/`,
+                    {
+                        name: music.name,
+                        albumId: music.albumId,
+                        authorId: music.authorId,
+                        file: music.file[0],
+                        image: music.image[0],
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    },
+                );
             }
             setUploaded(true);
             setUploadedName(music.name);
@@ -84,46 +128,86 @@ export default function MusicForm() {
 
             <div className={styles.row}>
                 <label htmlFor="url" className={styles.label}>
-                    Music URL
+                    Music File
                 </label>
                 <input
-                    id="url"
-                    type="text"
+                    type="file"
+                    id="img"
                     className={styles.input}
-                    placeholder="Music File..."
-                    {...register('url', {
+                    placeholder="Image"
+                    {...register('file', {
                         required: {
                             value: true,
-                            message: 'Music URL Is Required!',
-                        },
-                        pattern: {
-                            value: /\.(mp3)$/i,
-                            message: 'Please Upload Valid MP3 File!',
+                            message: 'MP3 is Required!',
                         },
                     })}
                 />
-                {errors.url?.message && (
-                    <ErrorMessage message={errors.url.message} />
+                {errors.file?.message && (
+                    <ErrorMessage message={errors.file.message} />
                 )}
             </div>
 
             <div className={styles.row}>
                 <label htmlFor="id" className={styles.label}>
-                    Artist ID
+                    Musig Image
                 </label>
                 <input
-                    id="id"
-                    type="number"
+                    type="file"
+                    id="img"
                     className={styles.input}
-                    placeholder="Artist ID..."
-                    {...register('authorId', {
+                    placeholder="Image"
+                    {...register('image', {
                         required: {
                             value: true,
-                            message: 'Author ID is Required!',
+                            message: 'Image is Required!',
                         },
-                        valueAsNumber: true,
+                        validate: {
+                            fileType: (file: FileList) =>
+                                ['png', 'jpg', 'jpeg'].includes(
+                                    file[0].type.split('/')[1].toLowerCase(),
+                                ) || 'The file type should be Image',
+                        },
                     })}
                 />
+                {errors.authorId?.message && (
+                    <ErrorMessage message={errors.authorId.message} />
+                )}
+            </div>
+
+            <div className={styles.row}>
+                <label htmlFor="id" className={styles.label}>
+                    Select Album
+                </label>
+                <AdminSelect
+                    register={register}
+                    value="albumId"
+                    message="Album is required!"
+                >
+                    {albums.map((album) => (
+                        <option value={album.id}> {album.name}</option>
+                    ))}
+                </AdminSelect>
+                {errors.authorId?.message && (
+                    <ErrorMessage message={errors.authorId.message} />
+                )}
+            </div>
+
+            <div className={styles.row}>
+                <label htmlFor="id" className={styles.label}>
+                    Select Artist
+                </label>
+                <MusicSelect
+                    register={register}
+                    value="authorId"
+                    message="Author is required!"
+                >
+                    {artists.map((artist) => (
+                        <option value={artist.id}>
+                            {' '}
+                            {artist.firstName} {artist.lastName}
+                        </option>
+                    ))}
+                </MusicSelect>
                 {errors.authorId?.message && (
                     <ErrorMessage message={errors.authorId.message} />
                 )}
