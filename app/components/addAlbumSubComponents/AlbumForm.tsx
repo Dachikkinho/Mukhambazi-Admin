@@ -60,7 +60,21 @@ const AlbumForm = () => {
     };
 
     const createAlbum = async (album: CreateAlbum) => {
-        await axios.post('http://localhost:3001/albums/', album);
+        await axios.post(
+            'http://localhost:3001/album/',
+            {
+                artistName: album.artistName,
+                authorId: album.authorId,
+                image: album.image[0],
+                name: album.name,
+                releaseDate: album.releaseDate,
+            },
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            },
+        );
     };
 
     const updateAlbum = async (id: string, album: CreateAlbum) => {
