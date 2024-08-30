@@ -3,4 +3,5 @@ export interface CreateAlbum {
     artistName: string;
     releaseDate: string;
     authorId: number;
+    image: FileList;
 }

@@ -5,6 +5,7 @@ import Search from '../Header/Search/Search';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import LoadingBar from 'react-top-loading-bar';
+import { Album } from '@/app/interfaces/album.interface';
 
 const Albums = () => {
     const [albums, setAlbums] = useState<Album[]>([]);
@@ -61,7 +62,7 @@ const Albums = () => {
                             name={album.name}
                             lastName={''}
                             plays={album.releaseDate}
-                            image={'/images/songCovers/banner.png'}
+                            image={album.image}
                         />
                     </Link>
                 ))}

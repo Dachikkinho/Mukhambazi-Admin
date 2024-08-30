@@ -9,6 +9,9 @@ import LoadingBar from 'react-top-loading-bar';
 import { isPlayingState } from '@/app/states';
 import { useRecoilState } from 'recoil';
 import Link from 'next/link';
+import { Album } from '@/app/interfaces/album.interface';
+import { Music } from '@/app/interfaces/music.interface';
+import { Artist as ArtiistInterface } from '@/app/interfaces/artist.interface';
 
 const Artist = () => {
     useEffect(() => {
@@ -17,8 +20,8 @@ const Artist = () => {
     const params = useParams();
     const id = params.artist;
 
-    const [artist, setArtist] = useState<Artist>();
-    const [songs, setSongs] = useState<Song[]>([]);
+    const [artist, setArtist] = useState<ArtiistInterface>();
+    const [songs, setSongs] = useState<Music[]>([]);
     const [progress, setProgress] = useState(0);
     const [albums, setAlbums] = useState<Album[]>([]);
     const [, setIsPlaying] = useRecoilState(isPlayingState);
@@ -101,7 +104,7 @@ const Artist = () => {
                         {albums.map((album, i) => (
                             <Link href={`../albums/${album.id}`} key={i}>
                                 <Albumcard
-                                    image="/images/songCovers/banner.png"
+                                    image={album.image}
                                     name={`${album.name}` || ''}
                                     lastName=""
                                     plays={album.releaseDate}
