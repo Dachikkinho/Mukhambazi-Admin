@@ -11,7 +11,7 @@ import { useRecoilState } from 'recoil';
 import Link from 'next/link';
 import { Album } from '@/app/interfaces/album.interface';
 import { Music } from '@/app/interfaces/music.interface';
-import { Artists } from '@/app/interfaces/createArtist.interface';
+import { Artist as ArtiistInterface } from '@/app/interfaces/artist.interface';
 
 const Artist = () => {
     useEffect(() => {
@@ -20,7 +20,7 @@ const Artist = () => {
     const params = useParams();
     const id = params.artist;
 
-    const [artist, setArtist] = useState<Artists>();
+    const [artist, setArtist] = useState<ArtiistInterface>();
     const [songs, setSongs] = useState<Music[]>([]);
     const [progress, setProgress] = useState(0);
     const [albums, setAlbums] = useState<Album[]>([]);
@@ -104,7 +104,7 @@ const Artist = () => {
                         {albums.map((album, i) => (
                             <Link href={`../albums/${album.id}`} key={i}>
                                 <Albumcard
-                                    image="/images/songCovers/banner.png"
+                                    image={album.image}
                                     name={`${album.name}` || ''}
                                     lastName=""
                                     plays={album.releaseDate}

@@ -7,6 +7,8 @@ import { isPlayingState } from '@/app/states';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import LoadingBar from 'react-top-loading-bar';
+import { AlbumPage } from '@/app/interfaces/albunPage.interface';
+import { Music } from '@/app/interfaces/music.interface';
 
 const AlbumArtist = () => {
     useEffect(() => {
@@ -16,7 +18,7 @@ const AlbumArtist = () => {
     const param = useParams();
     const id = param.album;
     const [album, setAlbum] = useState<AlbumPage>();
-    const [songs, setSongs] = useState<Song[]>([]);
+    const [songs, setSongs] = useState<Music[]>([]);
     const [progress, setProgress] = useState(0);
     const [, setIsPlaying] = useRecoilState(isPlayingState);
 
@@ -88,7 +90,7 @@ const AlbumHeader = ({ album }: { album: AlbumPage }) => (
     <div className={styles.albums}>
         <img
             className={styles.photo}
-            src={'/images/songCovers/banner.png'}
+            src={album.image}
             alt="icon"
         />
         <div>{album.name}</div>
