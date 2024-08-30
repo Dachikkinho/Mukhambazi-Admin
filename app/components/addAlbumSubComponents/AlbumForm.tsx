@@ -32,7 +32,7 @@ const AlbumForm = () => {
     const fetchAlbumData = async (id: string) => {
         try {
             const response = await axios.get(
-                `http://localhost:3001/albums/${id}`,
+                `https://mukhambazi-back.onrender.com/albums/${id}`,
             );
             reset(response.data);
         } catch (error) {

@@ -31,7 +31,7 @@ const ArtistForm = () => {
     const fetchAuthorData = async (id: string) => {
         try {
             const response = await axios.get(
-                `http://localhost:3001/authors/${id}`,
+                `https://mukhambazi-back.onrender.com/authors/${id}`,
             );
             reset(response.data);
         } catch (error) {

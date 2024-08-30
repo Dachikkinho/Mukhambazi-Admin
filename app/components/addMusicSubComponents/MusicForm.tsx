@@ -30,7 +30,7 @@ export default function MusicForm() {
     useEffect(() => {
         if (id) {
             axios
-                .get(`http://localhost:3001/music/${id}`)
+                .get(`https://mukhambazi-back.onrender.com/music/${id}`)
                 .then((res) => {
                     reset(res.data);
                 })
