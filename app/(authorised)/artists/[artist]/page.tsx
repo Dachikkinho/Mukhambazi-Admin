@@ -86,7 +86,7 @@ const Artist = () => {
                                     ''
                                 }
                                 imageSrc={'/images/song-placeholder.svg'}
-                                length={'2:00'}
+                                songUrl={song.url}
                                 name={song.name}
                                 key={i}
                                 onClick={() => playMusic(song.url, song.name)}
