@@ -32,7 +32,7 @@ const AlbumForm = () => {
     const fetchAlbumData = async (id: string) => {
         try {
             const response = await axios.get(
-                `http://localhost:3001/albums/${id}`,
+                `https://mukhambazi-back.onrender.com/albums/${id}`,
             );
             reset(response.data);
         } catch (error) {
@@ -61,7 +61,7 @@ const AlbumForm = () => {
 
     const createAlbum = async (album: CreateAlbum) => {
         await axios.post(
-            'http://localhost:3001/album/',
+            'https://mukhambazi-back.onrender.com/album/',
             {
                 artistName: album.artistName,
                 authorId: album.authorId,
@@ -78,7 +78,7 @@ const AlbumForm = () => {
     };
 
     const updateAlbum = async (id: string, album: CreateAlbum) => {
-        await axios.patch(`http://localhost:3001/albums/${id}`, album);
+        await axios.patch(`https://mukhambazi-back.onrender.com/albums/${id}`, album);
     };
 
     return uploaded ? (

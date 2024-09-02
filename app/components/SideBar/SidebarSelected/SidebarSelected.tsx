@@ -34,6 +34,9 @@ const SidebarSelected = () => {
             case '/addAlbum':
                 setPosition('623px');
                 break;
+            case '/addMusic':
+                setPosition('623px');
+                break;
             default:
                 setPosition('179px');
         }

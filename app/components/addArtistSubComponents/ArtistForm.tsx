@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { FormStatus } from '@/app/components/addArtistSubComponents/FormStatus';
 import { CreateAuthor } from '@/app/interfaces/createAuthor.interface';
 import { ArtistImageInput } from './ArtistImageInput';
@@ -31,7 +31,7 @@ const ArtistForm = () => {
     const fetchAuthorData = async (id: string) => {
         try {
             const response = await axios.get(
-                `http://localhost:3001/authors/${id}`,
+                `https://mukhambazi-back.onrender.com/authors/${id}`,
             );
             reset(response.data);
         } catch (error) {
@@ -64,7 +64,7 @@ const ArtistForm = () => {
         console.log(author.image);
 
         await axios.post(
-            'http://localhost:3001/authors/',
+            'https://mukhambazi-back.onrender.com/authors/',
             {
                 image: author.image[0],
                 firstName: author.firstName,
@@ -81,7 +81,7 @@ const ArtistForm = () => {
     };
 
     const updateAuthor = async (id: string, author: CreateAuthor) => {
-        await axios.patch(`http://localhost:3001/authors/${id}`, author);
+        await axios.patch(`https://mukhambazi-back.onrender.com/authors/${id}`, author);
     };
 
     return uploaded ? (
