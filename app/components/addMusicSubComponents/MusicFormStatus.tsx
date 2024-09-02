@@ -2,7 +2,7 @@ import styles from '../../(authorised)/addMusic/page.module.scss';
 import { Done } from '@/app/components/Done/Done';
 
 type Props = {
-    id: string;
+    id: number;
     uploadedName: string;
 };
 
