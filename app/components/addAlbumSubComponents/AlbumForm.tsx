@@ -61,7 +61,7 @@ const AlbumForm = () => {
 
     const createAlbum = async (album: CreateAlbum) => {
         await axios.post(
-            'https://mukhambazi-back.onrender.com/album/',
+            'https://mukhambazi-back.onrender.com/albums/',
             {
                 artistName: album.artistName,
                 authorId: album.authorId,
