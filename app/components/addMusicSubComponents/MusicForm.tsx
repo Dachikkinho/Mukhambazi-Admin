@@ -77,6 +77,7 @@ export default function MusicForm() {
                         authorId: music.authorId,
                         file: music.file[0],
                         image: music.image[0],
+                        userId: 1,
                     },
                     {
                         headers: {

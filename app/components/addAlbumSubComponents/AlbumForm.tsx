@@ -68,6 +68,7 @@ const AlbumForm = () => {
                 image: album.image[0],
                 name: album.name,
                 releaseDate: album.releaseDate,
+                userId: 1,
             },
             {
                 headers: {

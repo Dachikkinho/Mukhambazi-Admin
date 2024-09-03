@@ -71,6 +71,7 @@ const ArtistForm = () => {
                 lastName: author.lastName,
                 biography: author.biography,
                 country: 'usa',
+                userId: 1,
             },
             {
                 headers: {
