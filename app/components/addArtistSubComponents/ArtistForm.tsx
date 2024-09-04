@@ -113,7 +113,7 @@ const ArtistForm = () => {
                 id="lastname"
                 placeholder="Exp: White"
                 register={register('lastName', {
-                    required: { value: true, message: 'Lastname is Required!' },
+                  
                 })}
                 errorMessage={errors.lastName?.message}
             />
