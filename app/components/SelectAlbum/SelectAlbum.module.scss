@@ -1,0 +1,32 @@
+.select {
+    border: 1px solid #5a2a6e;
+    border-radius: 4px;
+    padding: 8px 12px;
+    width: 100%;
+    background-color: #1c1c3b;
+    color: #e0e0e0;
+    font-family: var(--font-family);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 112%;
+
+    &::placeholder {
+        color: #b1a8b8;
+    }
+
+    &:focus {
+        border-color: #8e2a6b;
+        box-shadow: 0px 0px 10px #8e2a6b;
+        transition: all 0.3s ease;
+    }
+
+    &:hover {
+        border-color: #441735;
+        box-shadow: 0px 0px 10px #8e2a6b;
+        transition: all 0.5s ease;
+    }
+
+    * {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+}

@@ -7,6 +7,7 @@ import { CreateAuthor } from '@/app/interfaces/createAuthor.interface';
 import { ArtistImageInput } from './ArtistImageInput';
 import { ArtistTextInput } from './ArtistTextInput';
 import styles from '../../(authorised)/addArtist/page.module.scss';
+import SelectArtist from '../SelectArtist/SelectArtist';
 
 const ArtistForm = () => {
     const {
@@ -70,7 +71,9 @@ const ArtistForm = () => {
                 firstName: author.firstName,
                 lastName: author.lastName,
                 biography: author.biography,
-                country: 'usa',
+                country: author.Region,
+                Category: author.Category,
+                Region: author.Region,
                 userId: 1,
             },
             {
@@ -82,7 +85,10 @@ const ArtistForm = () => {
     };
 
     const updateAuthor = async (id: string, author: CreateAuthor) => {
-        await axios.patch(`https://mukhambazi-back.onrender.com/authors/${id}`, author);
+        await axios.patch(
+            `https://mukhambazi-back.onrender.com/authors/${id}`,
+            author,
+        );
     };
 
     return uploaded ? (
@@ -128,6 +134,42 @@ const ArtistForm = () => {
                 })}
                 errorMessage={errors.biography?.message}
             />
+            <div className={styles.row}>
+                <label htmlFor="category" className={styles.selectLabel}>
+                    Select Category
+                </label>
+                <SelectArtist
+                    id="category"
+                    register={register}
+                    value="Category"
+                    message="Category Is Required!"
+                >
+                    <option value="Artists" selected>
+                        Top Artists
+                    </option>
+
+                    <option value="Charts">Top Charts</option>
+                    <option value="Hits">Top Hits</option>
+                </SelectArtist>
+            </div>
+            <div className={styles.row}>
+                <label htmlFor="category" className={styles.selectLabel}>
+                    Select Region
+                </label>
+                <SelectArtist
+                    id="category"
+                    register={register}
+                    value="Region"
+                    message="Region Is Required!"
+                >
+                    <option value="Popular" selected>
+                        Popular
+                    </option>
+
+                    <option value="Georgian">Georgian</option>
+                    <option value="European">European</option>
+                </SelectArtist>
+            </div>
             <button type="submit" className={styles.confirm}>
                 Add Artist
             </button>
