@@ -1,21 +1,23 @@
 import styles from './SongsMainSection.module.scss';
 import Search from '../Header/Search/Search';
+import Song from './Song/Song';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRecoilState } from 'recoil';
-import { isPlayingState } from '@/app/states';
+import { useSetRecoilState } from 'recoil';
+import { isPlayingState, nextSongArrState } from '@/app/states';
 import LoadingBar from 'react-top-loading-bar';
 import { Music } from '@/app/interfaces/music.interface';
-import Song from './Song/Song';
+import { playMusic } from '@/app/utils/playMusic';
 
 const SongsMainSection = () => {
     const [songs, setSongs] = useState<Music[]>([]);
     const [progress, setProgress] = useState(0);
-    const [, setIsPlaying] = useRecoilState(isPlayingState);
+    const setIsPlaying = useSetRecoilState(isPlayingState);
+    const setNextSongArr = useSetRecoilState(nextSongArrState);
 
     useEffect(() => {
         axios
-            .get('http://localhost:3001/music/', {
+            .get('https://back.chakrulos.ge/music', {
                 onDownloadProgress: (progressEvent) => {
                     const { loaded, total } = progressEvent;
 
@@ -30,16 +32,8 @@ const SongsMainSection = () => {
             })
             .then((res) => {
                 setSongs(res.data);
-                console.log(res.data);
             });
     }, []);
-
-    function playMusic(src: string, name: string) {
-        setIsPlaying({
-            src: src,
-            name: name,
-        });
-    }
 
     return (
         <div className={styles.mainContainer}>
@@ -59,7 +53,7 @@ const SongsMainSection = () => {
             </div>
             <div>
                 <div className={styles.headingCont}>
-                    <h5 className={styles.heading}>Songs</h5>
+                    <h4>Songs</h4>
                     <img
                         src="/icons/note-circle.svg"
                         alt="icon"
@@ -72,9 +66,19 @@ const SongsMainSection = () => {
                             name={song.name}
                             group={`${song.author.firstName} ${song.author.lastName}`}
                             songUrl={song.url}
-                            imageSrc={'/images/song-placeholder.svg'}
+                            imageSrc={song.image}
                             key={i}
-                            onClick={() => playMusic(song.url, song.name)}
+                            onClick={() =>
+                                playMusic(
+                                    songs,
+                                    setNextSongArr,
+                                    setIsPlaying,
+                                    song.url,
+                                    song.name,
+                                    i,
+                                    song.image,
+                                )
+                            }
                         />
                     ))}
                 </div>

@@ -6,12 +6,13 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import LoadingBar from 'react-top-loading-bar';
-import { isPlayingState } from '@/app/states';
-import { useRecoilState } from 'recoil';
+import { isPlayingState, nextSongArrState } from '@/app/states';
+import { useSetRecoilState } from 'recoil';
 import Link from 'next/link';
 import { Album } from '@/app/interfaces/album.interface';
 import { Music } from '@/app/interfaces/music.interface';
-import { Artist as ArtiistInterface } from '@/app/interfaces/artist.interface';
+import { playMusic } from '@/app/utils/playMusic';
+import { Artists } from '@/app/interfaces/artist.interface';
 
 const Artist = () => {
     useEffect(() => {
@@ -20,15 +21,16 @@ const Artist = () => {
     const params = useParams();
     const id = params.artist;
 
-    const [artist, setArtist] = useState<ArtiistInterface>();
+    const [artist, setArtist] = useState<Artists>();
     const [songs, setSongs] = useState<Music[]>([]);
     const [progress, setProgress] = useState(0);
     const [albums, setAlbums] = useState<Album[]>([]);
-    const [, setIsPlaying] = useRecoilState(isPlayingState);
+    const setIsPlaying = useSetRecoilState(isPlayingState);
+    const setNextSongArr = useSetRecoilState(nextSongArrState);
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3001/authors/${id}`, {
+            .get(`https://back.chakrulos.ge/authors/${id}`, {
                 onDownloadProgress: (progressEvent) => {
                     const { loaded, total } = progressEvent;
 
@@ -44,13 +46,6 @@ const Artist = () => {
                 setAlbums([...res.data.album]);
             });
     }, []);
-
-    function playMusic(src: string, name: string) {
-        setIsPlaying({
-            src: src,
-            name: name,
-        });
-    }
 
     return (
         <main className={styles.main}>
@@ -85,11 +80,21 @@ const Artist = () => {
                                     `${artist?.firstName} ${artist?.lastName}` ||
                                     ''
                                 }
-                                imageSrc={'/images/song-placeholder.svg'}
-                                songUrl={song.url}
+                                imageSrc={song.image}
                                 name={song.name}
+                                songUrl={song.url}
                                 key={i}
-                                onClick={() => playMusic(song.url, song.name)}
+                                onClick={() =>
+                                    playMusic(
+                                        songs,
+                                        setNextSongArr,
+                                        setIsPlaying,
+                                        song.url,
+                                        song.name,
+                                        i,
+                                        song.image,
+                                    )
+                                }
                             />
                         ))}
                     </div>

@@ -112,9 +112,7 @@ const ArtistForm = () => {
                 label="Lastname"
                 id="lastname"
                 placeholder="Exp: White"
-                register={register('lastName', {
-                  
-                })}
+                register={register('lastName', {})}
                 errorMessage={errors.lastName?.message}
             />
             <ArtistTextInput

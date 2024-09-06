@@ -1,5 +1,4 @@
-import { CreateAlbum } from '@/app/interfaces/createAlbum.interface';
-import { UseFormRegister, FieldErrors } from 'react-hook-form';
+import { UseFormRegister } from 'react-hook-form';
 import styles from './MusicSelect.module.scss';
 import { ReactNode } from 'react';
 import { CreateMusic } from '@/app/interfaces/createMusic.interface';

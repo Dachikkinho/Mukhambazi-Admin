@@ -13,7 +13,7 @@ const Albums = () => {
 
     useEffect(() => {
         axios
-            .get('http://localhost:3001/album', {
+            .get('https://back.chakrulos.ge/album', {
                 onDownloadProgress: (progressEvent) => {
                     const { loaded, total } = progressEvent;
 

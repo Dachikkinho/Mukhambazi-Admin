@@ -3,12 +3,14 @@
 import styles from './page.module.scss';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { isPlayingState } from '@/app/states';
+import { isPlayingState, nextSongArrState } from '@/app/states';
 import axios from 'axios';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import LoadingBar from 'react-top-loading-bar';
-import { AlbumPage } from '@/app/interfaces/albunPage.interface';
+
 import { Music } from '@/app/interfaces/music.interface';
+import { playMusic } from '@/app/utils/playMusic';
+import { AlbumPage } from '@/app/interfaces/albumPage.interface';
 
 const AlbumArtist = () => {
     useEffect(() => {
@@ -20,11 +22,12 @@ const AlbumArtist = () => {
     const [album, setAlbum] = useState<AlbumPage>();
     const [songs, setSongs] = useState<Music[]>([]);
     const [progress, setProgress] = useState(0);
-    const [, setIsPlaying] = useRecoilState(isPlayingState);
+    const setIsPlaying = useSetRecoilState(isPlayingState);
+    const setNextSongArr = useSetRecoilState(nextSongArrState);
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3001/album/${id}`, {
+            .get(`https://back.chakrulos.ge/album/${id}`, {
                 onDownloadProgress: (progressEvent) => {
                     const { loaded, total } = progressEvent;
 
@@ -41,15 +44,8 @@ const AlbumArtist = () => {
             });
     }, []);
 
-    function playMusic(src: string, name: string) {
-        setIsPlaying({
-            src: src,
-            name: name,
-        });
-    }
-
     if (!album) {
-        return <div>Album not found</div>;
+        return;
     }
 
     return (
@@ -67,7 +63,17 @@ const AlbumArtist = () => {
                         <div
                             key={index}
                             className={styles.songs}
-                            onClick={() => playMusic(song.url, song.name)}
+                            onClick={() =>
+                                playMusic(
+                                    songs,
+                                    setNextSongArr,
+                                    setIsPlaying,
+                                    song.url,
+                                    song.name,
+                                    index,
+                                    song.image,
+                                )
+                            }
                         >
                             <span></span>
                             <div className={styles.icon}>
@@ -88,11 +94,7 @@ const AlbumArtist = () => {
 
 const AlbumHeader = ({ album }: { album: AlbumPage }) => (
     <div className={styles.albums}>
-        <img
-            className={styles.photo}
-            src={album.image}
-            alt="icon"
-        />
+        <img className={styles.photo} src={album.image} alt="icon" />
         <div>{album.name}</div>
         {album.artistName}
     </div>

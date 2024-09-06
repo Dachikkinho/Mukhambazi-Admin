@@ -5,33 +5,64 @@ import { Key, useEffect, useState } from 'react';
 import LandingCard from './LandingCard/LandingCard';
 import axios from 'axios';
 import LoadingBar from 'react-top-loading-bar';
+import { Artists } from '@/app/interfaces/artist.interface';
 
 const TopArtist = () => {
-    const [artists, setArtists] = useState<Artist[]>([]);
+    const [topArtists, setTopArtists] = useState<Artists[]>([]);
+    const [topHits, setTopHits] = useState<Artists[]>([]);
+    const [topCharts, setTopCharts] = useState<Artists[]>([]);
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
         axios
-            .get('http://localhost:3001/authors', {
-                onDownloadProgress: (progressEvent) => {
-                    const { loaded, total } = progressEvent;
+            .all([
+                axios.get(
+                    `https://back.chakrulos.ge/authors/category/Artists`,
+                    {
+                        onDownloadProgress: (progressEvent) => {
+                            const { loaded, total } = progressEvent;
 
-                    if (total) {
-                        const percentage = Math.floor((loaded / total) * 100);
-                        setProgress(percentage);
-                        console.log(
-                            `Downloaded: ${Math.floor((loaded / total) * 100)}%`,
-                        );
-                    }
-                },
-            })
-            .then((res) => {
-                setArtists([...res.data]);
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+                            if (total) {
+                                const percentage = Math.floor(
+                                    (loaded / total) * 100,
+                                );
+                                setProgress(percentage);
+                            }
+                        },
+                    },
+                ),
+                axios.get(`https://back.chakrulos.ge/authors/category/Hits`, {
+                    onDownloadProgress: (progressEvent) => {
+                        const { loaded, total } = progressEvent;
+
+                        if (total) {
+                            const percentage = Math.floor(
+                                (loaded / total) * 100,
+                            );
+                            setProgress(percentage);
+                        }
+                    },
+                }),
+                axios.get('https://back.chakrulos.ge/authors/category/Charts', {
+                    onDownloadProgress: (progressEvent) => {
+                        const { loaded, total } = progressEvent;
+
+                        if (total) {
+                            const percentage = Math.floor(
+                                (loaded / total) * 100,
+                            );
+                            setProgress(percentage);
+                        }
+                    },
+                }),
+            ])
+            .then(
+                axios.spread((artists, hits, charts) => {
+                    setTopArtists(artists.data);
+                    setTopHits(hits.data);
+                    setTopCharts(charts.data);
+                }),
+            );
     }, []);
 
     return (
@@ -55,8 +86,8 @@ const TopArtist = () => {
                 </div>
             </div>
             <div className={styles.artistsWrapper}>
-                {artists.map(
-                    (artist: Artist, index: Key | null | undefined) => (
+                {topArtists.map(
+                    (artist: Artists, index: Key | null | undefined) => (
                         <Link key={index} href={`/artists/${artist.id}`}>
                             <LandingCard
                                 name={`${artist.firstName} ${artist.lastName}`}
@@ -81,8 +112,8 @@ const TopArtist = () => {
                 </div>
             </div>
             <div className={styles.artistsWrapper}>
-                {artists.map(
-                    (artist: Artist, index: Key | null | undefined) => (
+                {topHits.map(
+                    (artist: Artists, index: Key | null | undefined) => (
                         <Link key={index} href={`/artists/${artist.id}`}>
                             <LandingCard
                                 name={`${artist.firstName} ${artist.lastName}`}
@@ -107,14 +138,14 @@ const TopArtist = () => {
                 </div>
             </div>
             <div className={styles.artistsWrapper}>
-                {artists.map(
-                    (artist: Artist, index: Key | null | undefined) => (
+                {topCharts.map(
+                    (artist: Artists, index: Key | null | undefined) => (
                         <Link key={index} href={`/artists/${artist.id}`}>
                             <LandingCard
                                 name={`${artist.firstName} ${artist.lastName}`}
                                 bgColor={''}
                                 img={artist.image}
-                                plays={'10594'}
+                                plays={'2'}
                             />
                         </Link>
                     ),

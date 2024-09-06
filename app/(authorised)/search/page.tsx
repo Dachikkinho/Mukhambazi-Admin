@@ -5,16 +5,24 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Search from '@/app/components/Header/Search/Search';
 import Song from '@/app/components/SongsMainSection/Song/Song';
-import { isPlayingState } from '@/app/states';
-import { useRecoilState } from 'recoil';
+import { isPlayingState, nextSongArrState } from '@/app/states';
+import { useSetRecoilState } from 'recoil';
 import AlbumCard from '@/app/components/Albums/AlbumCard/AlbumCard';
 import Link from 'next/link';
 import LoadingBar from 'react-top-loading-bar';
-import { useSearchParams } from 'next/navigation';
-import { Album } from '@/app/interfaces/album.interface';
 import { Music } from '@/app/interfaces/music.interface';
+import { Album } from '@/app/interfaces/album.interface';
+import { playMusic } from '@/app/utils/playMusic';
+import { Artists } from '@/app/interfaces/artist.interface';
+import LandingCard from '@/app/components/MainSection/TopArtist/LandingCard/LandingCard';
 
-const SearchPage = () => {
+type Props = {
+    searchParams: {
+        query: string;
+    };
+};
+
+const SearchPage = (props: Props) => {
     useEffect(() => {
         document.title = 'Chakrulos - Web Player: Music for everyone';
     }, []);
@@ -22,40 +30,33 @@ const SearchPage = () => {
     const [songs, setSongs] = useState<Music[]>([]);
     const [progress, setProgress] = useState(0);
     const [albums, setAlbums] = useState<Album[]>([]);
-    const [, setIsPlaying] = useRecoilState(isPlayingState);
-
-    const params = useSearchParams();
-    const query = params.get('query');
+    const [artists, setArtists] = useState<Artists[]>([]);
+    const setIsPlaying = useSetRecoilState(isPlayingState);
+    const setNextSongArr = useSetRecoilState(nextSongArrState);
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3001/search/${query}`, {
-                onDownloadProgress: (progressEvent) => {
-                    const { loaded, total } = progressEvent;
+            .get(
+                `https://back.chakrulos.ge/search/${props.searchParams.query}`,
+                {
+                    onDownloadProgress: (progressEvent) => {
+                        const { loaded, total } = progressEvent;
 
-                    if (total) {
-                        const percentage = Math.floor((loaded / total) * 100);
-                        setProgress(percentage);
-                    }
+                        if (total) {
+                            const percentage = Math.floor(
+                                (loaded / total) * 100,
+                            );
+                            setProgress(percentage);
+                        }
+                    },
                 },
-            })
+            )
             .then((res) => {
-                console.log(res);
-
                 setSongs([...res.data.music]);
                 setAlbums([...res.data.album]);
-            })
-            .catch((err) => {
-                console.log(err);
+                setArtists([...res.data.author]);
             });
-    }, [query]);
-
-    function playMusic(src: string, name: string) {
-        setIsPlaying({
-            src: src,
-            name: name,
-        });
-    }
+    }, [props.searchParams.query]);
 
     return (
         <main className={styles.main}>
@@ -71,9 +72,33 @@ const SearchPage = () => {
                     icon={'search'}
                     width={24}
                     height={24}
-                    value={query || ''}
+                    value={props.searchParams.query || ''}
                 />
             </div>
+            {!!artists.length && (
+                <div className={styles.sectionCont}>
+                    <div className={styles.headingCont}>
+                        <h5 className={styles.heading}>Artists</h5>
+                        <img
+                            src="/icons/artists-icon.svg"
+                            alt="icon"
+                            draggable={false}
+                        />
+                    </div>
+                    <div className={styles.songsCont}>
+                        {artists.map((artist, i) => (
+                            <Link key={i} href={`/artists/${artist.id}`}>
+                                <LandingCard
+                                    name={`${artist.firstName} ${artist.lastName}`}
+                                    bgColor={''}
+                                    img={artist.image}
+                                    plays={'2'}
+                                />
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            )}
             {!!songs.length && (
                 <div className={styles.sectionCont}>
                     <div className={styles.headingCont}>
@@ -90,9 +115,19 @@ const SearchPage = () => {
                                 name={song.name}
                                 group={``}
                                 songUrl={song.url}
-                                imageSrc={'/images/song-placeholder.svg'}
+                                imageSrc={song.image}
                                 key={i}
-                                onClick={() => playMusic(song.url, song.name)}
+                                onClick={() =>
+                                    playMusic(
+                                        songs,
+                                        setNextSongArr,
+                                        setIsPlaying,
+                                        song.url,
+                                        song.name,
+                                        i,
+                                        song.image,
+                                    )
+                                }
                             />
                         ))}
                     </div>

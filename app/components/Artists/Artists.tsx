@@ -14,7 +14,7 @@ const ArtistsPage = () => {
 
     useEffect(() => {
         axios
-            .get('http://localhost:3001/authors', {
+            .get('https://back.chakrulos.ge/authors', {
                 onDownloadProgress: (progressEvent) => {
                     const { loaded, total } = progressEvent;
 

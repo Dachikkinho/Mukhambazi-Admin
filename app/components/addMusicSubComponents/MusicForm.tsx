@@ -95,7 +95,7 @@ export default function MusicForm() {
     };
 
     return uploaded ? (
-        <MusicFormStatus id={0} uploadedName={uploadedName}   />
+        <MusicFormStatus id={0} uploadedName={uploadedName} />
     ) : (
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
             <MusicFormFields

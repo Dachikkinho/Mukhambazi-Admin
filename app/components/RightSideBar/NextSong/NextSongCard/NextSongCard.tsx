@@ -4,16 +4,31 @@ type Props = {
     isActive?: boolean;
     arsitName: string;
     songName: string;
+    onClick: () => void;
+    image: string;
+    className?: string;
 };
 
-const NextSongCard = ({ isActive = false, arsitName, songName }: Props) => {
+const NextSongCard = ({
+    isActive = false,
+    arsitName,
+    songName,
+    onClick,
+    image,
+    className,
+}: Props) => {
     const defaultCard = styles.container;
     const activeCard = styles.containerActive;
 
     return (
-        <div className={isActive ? activeCard : defaultCard}>
+        <div
+            className={`${isActive ? activeCard : defaultCard} ${className}`}
+            onClick={onClick}
+        >
             {/* image placeholder */}
-            <div className={styles.circle}></div>
+            <div className={styles.circle}>
+                <img src={image} alt="" />
+            </div>
             <div>
                 <p className={styles.name}>
                     {arsitName} - {songName}

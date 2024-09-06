@@ -2,7 +2,6 @@ import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import styles from '../../(authorised)/addAlbum/page.module.scss';
 import { ErrorMessage } from '@/app/components/ErrorMessage/ErrorMessage';
 import { CreateAlbum } from '@/app/interfaces/createAlbum.interface';
-import { AlbumSelect } from './AlbumSelect';
 import SelectAlbum from '../SelectAlbum/SelectAlbum';
 import { useEffect, useState } from 'react';
 import { Artists } from '@/app/interfaces/createArtist.interface';
@@ -127,8 +126,10 @@ export const AlbumFormFields = ({ register, errors }: Props) => {
                 >
                     <option selected></option>
 
-                    {artists.map(artist => (
-                        <option value={artist.id}>{artist.firstName} {artist.lastName}</option>
+                    {artists.map((artist) => (
+                        <option value={artist.id}>
+                            {artist.firstName} {artist.lastName}
+                        </option>
                     ))}
                 </SelectAlbum>
 

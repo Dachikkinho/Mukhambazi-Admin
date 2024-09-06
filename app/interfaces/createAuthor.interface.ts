@@ -4,6 +4,6 @@ export interface CreateAuthor {
     biography: string;
     image: FileList;
     country: string;
-    Category: "Charts" | "Hits" | "Artists"
-    Region: "Popular" | "Georgian" | "European"
+    Category: 'Charts' | 'Hits' | 'Artists';
+    Region: 'Popular' | 'Georgian' | 'European';
 }
