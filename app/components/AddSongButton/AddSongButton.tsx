@@ -1,39 +1,32 @@
 import { useEffect, useState } from 'react';
 import styles from './AddSongButton.module.scss';
 import Listdisabled from '../Playlists/ListDisabled';
-import axios from 'axios';
 import { popUpOpenState } from '@/app/states';
-import { useRecoilState } from 'recoil';
-import { Album } from '@/app/interfaces/album.interface';
+import { useSetRecoilState } from 'recoil';
 
-interface Props {
-    songId: string;
-}
-
-const AddSongButton = ({ songId }: Props) => {
+const AddSongButton = () => {
     const [open, setOpen] = useState(false);
-    const [playlists, setPlaylists] = useState<Album[]>([]);
     const [success, setSuccess] = useState(false);
 
     // place holder upload function
 
-    function upload(id: number) {
-        axios.patch(`upload Link`, songId).then(() => {
-            setOpen(false);
-        });
-    }
+    // function upload(id: number) {
+    //     axios.patch(`upload Link`, songId).then(() => {
+    //         setOpen(false);
+    //     });
+    // }
 
     useEffect(() => {
         if (success) {
             const timer = setTimeout(() => {
                 setSuccess(false);
-            }, 2000);
+            }, 500);
 
             return () => clearTimeout(timer);
         }
     }, [success]);
 
-    const [, setPopUpOpen] = useRecoilState(popUpOpenState);
+    const setPopUpOpen = useSetRecoilState(popUpOpenState);
 
     return (
         <>
@@ -81,9 +74,9 @@ const AddSongButton = ({ songId }: Props) => {
                         <div>
                             <div className={styles.playlist}>
                                 <div
-                                    onClick={() => {
-                                        upload(0);
-                                    }}
+                                // onClick={() => {
+                                //     upload(0);
+                                // }}
                                 >
                                     <Listdisabled
                                         title={'nme'}
