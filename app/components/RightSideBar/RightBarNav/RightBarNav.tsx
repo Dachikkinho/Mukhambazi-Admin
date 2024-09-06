@@ -3,6 +3,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from './RightBarNav.module.scss';
 import { useRouter, usePathname } from 'next/navigation';
+import { useAuth } from '@/app/AuthContext';
+
 
 const toggleDropdown = (
     isDropdownOpen: boolean,
@@ -18,6 +20,8 @@ export function RightBarNav() {
     const pathname = usePathname();
     const dropdownRef = useRef<HTMLDivElement>(null);
 
+    const { logout } = useAuth();
+
     const toggleNotificationView = () => {
         const newNotificationState = !isNotificationView;
         setIsNotificationView(newNotificationState);
@@ -25,9 +29,9 @@ export function RightBarNav() {
         router.push(newNotificationState ? '/content-feed' : '/');
     };
 
-    const handleNavigation = (path: string) => {
-        router.push(path);
-        setIsDropdownOpen(false);
+    const handleLogout = () => {
+        logout();
+        router.push('/login');
     };
 
     useEffect(() => {
@@ -77,13 +81,13 @@ export function RightBarNav() {
                         src="/icons/user.png"
                         alt="User Profile"
                         draggable={false}
+                        height={50}
+                        width={50}
                     />
                 </button>
                 {isDropdownOpen && (
                     <div className={styles.dropdownMenu}>
-                        <button onClick={() => handleNavigation('/Login')}>
-                            Log out
-                        </button>
+                        <button onClick={handleLogout}>Log out</button>
                     </div>
                 )}
             </div>

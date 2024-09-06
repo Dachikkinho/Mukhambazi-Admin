@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { AlbumSelect } from '@/app/components/addAlbumSubComponents/AlbumSelect';
 import { useRouter } from 'next/navigation';
 import AlbumForm from '@/app/components/addAlbumSubComponents/AlbumForm';
+import PrivateRoute from '@/app/components/PrivateRoute/PrivateRoute';
 
 export default function AddArtist() {
     const router = useRouter();
@@ -18,11 +19,13 @@ export default function AddArtist() {
     };
 
     return (
-        <div className={styles.mainWrapper}>
-            <AlbumSelect onChange={onChange} />
-            <div className={styles.container}>
-                <AlbumForm />
+        <PrivateRoute>
+            <div className={styles.mainWrapper}>
+                <AlbumSelect onChange={onChange} />
+                <div className={styles.container}>
+                    <AlbumForm />
+                </div>
             </div>
-        </div>
+        </PrivateRoute>
     );
 }
