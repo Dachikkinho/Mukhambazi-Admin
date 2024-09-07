@@ -8,6 +8,8 @@ import { ArtistImageInput } from './ArtistImageInput';
 import { ArtistTextInput } from './ArtistTextInput';
 import styles from '../../(authorised)/addArtist/page.module.scss';
 import SelectArtist from '../SelectArtist/SelectArtist';
+import { UpdateAuthor } from '@/app/interfaces/updateAuthor.interface';
+import DeletePopUp from '../DeletePopUp/DeletePopUp';
 
 const ArtistForm = () => {
     const {
@@ -15,6 +17,7 @@ const ArtistForm = () => {
         handleSubmit,
         formState: { errors },
         reset,
+        watch,
     } = useForm<CreateAuthor>();
 
     const [uploaded, setUploaded] = useState(false);
@@ -22,10 +25,18 @@ const ArtistForm = () => {
     const [, setServerError] = useState<string | null>(null);
     const param = useSearchParams();
     const id = param.get('id');
+    const [edit, setEdit] = useState(false);
+    const [deleteConfirm, setDeleteConfirm] = useState(false);
+
+    let watchImag;
 
     useEffect(() => {
         if (id) {
             fetchAuthorData(id);
+            setEdit(true);
+            watchImag = watch('image');
+        } else {
+            setEdit(false);
         }
     }, [id]);
 
@@ -62,8 +73,6 @@ const ArtistForm = () => {
     };
 
     const createAuthor = async (author: CreateAuthor) => {
-        console.log(author.image);
-
         await axios.post(
             'https://mukhambazi-back.onrender.com/authors/',
             {
@@ -84,94 +93,130 @@ const ArtistForm = () => {
         );
     };
 
-    const updateAuthor = async (id: string, author: CreateAuthor) => {
-        await axios.patch(
-            `https://mukhambazi-back.onrender.com/authors/${id}`,
-            author,
-        );
+    const updateAuthor = async (id: string, author: UpdateAuthor) => {
+        await axios
+            .patch(`https://mukhambazi-back.onrender.com/authors/${id}`, author)
+            .then((res) => {
+                console.log(author);
+            });
     };
 
     return uploaded ? (
-        <FormStatus id={id || ''} uploadedName={uploadedName} />
+        <FormStatus
+            id={id || ''}
+            uploadedName={uploadedName}
+            deleting={deleteConfirm}
+        />
     ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-            <ArtistImageInput register={register} errors={errors} />
-            <ArtistTextInput
-                label="Firstname"
-                id="firstname"
-                placeholder="Exp: Barry"
-                register={register('firstName', {
-                    required: {
-                        value: true,
-                        message: 'Firstname is Required!',
-                    },
-                })}
-                errorMessage={errors.firstName?.message}
-            />
-            <ArtistTextInput
-                label="Lastname"
-                id="lastname"
-                placeholder="Exp: White"
-                register={register('lastName', {})}
-                errorMessage={errors.lastName?.message}
-            />
-            <ArtistTextInput
-                label="Artist Bio"
-                id="bio"
-                placeholder="About Artist..."
-                className={styles.textarea}
-                register={register('biography', {
-                    required: {
-                        value: true,
-                        message: 'Biography is Required!',
-                    },
-                    maxLength: {
-                        value: 500,
-                        message: 'Biography should not exceed 500 characters!',
-                    },
-                })}
-                errorMessage={errors.biography?.message}
-            />
-            <div className={styles.row}>
-                <label htmlFor="category" className={styles.selectLabel}>
-                    Select Category
-                </label>
-                <SelectArtist
-                    id="category"
-                    register={register}
-                    value="Category"
-                    message="Category Is Required!"
-                >
-                    <option value="Artists" selected>
-                        Top Artists
-                    </option>
+        <>
+            <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+                {!edit && (
+                    <ArtistImageInput
+                        register={register}
+                        errors={errors}
+                        required={!edit}
+                    />
+                )}
+                <ArtistTextInput
+                    label="Firstname"
+                    id="firstname"
+                    placeholder="Exp: Barry"
+                    register={register('firstName', {
+                        required: {
+                            value: true,
+                            message: 'Firstname is Required!',
+                        },
+                    })}
+                    errorMessage={errors.firstName?.message}
+                />
+                <ArtistTextInput
+                    label="Lastname"
+                    id="lastname"
+                    placeholder="Exp: White"
+                    register={register('lastName', {})}
+                    errorMessage={errors.lastName?.message}
+                />
+                <ArtistTextInput
+                    label="Artist Bio"
+                    id="bio"
+                    placeholder="About Artist..."
+                    className={styles.textarea}
+                    register={register('biography', {
+                        required: {
+                            value: true,
+                            message: 'Biography is Required!',
+                        },
+                        maxLength: {
+                            value: 500,
+                            message:
+                                'Biography should not exceed 500 characters!',
+                        },
+                    })}
+                    errorMessage={errors.biography?.message}
+                />
+                <div className={styles.row}>
+                    <label htmlFor="category" className={styles.selectLabel}>
+                        Select Category
+                    </label>
+                    <SelectArtist
+                        id="category"
+                        register={register}
+                        value="Category"
+                        message="Category Is Required!"
+                    >
+                        <option value="Artists" selected>
+                            Top Artists
+                        </option>
 
-                    <option value="Charts">Top Charts</option>
-                    <option value="Hits">Top Hits</option>
-                </SelectArtist>
-            </div>
-            <div className={styles.row}>
-                <label htmlFor="category" className={styles.selectLabel}>
-                    Select Region
-                </label>
-                <SelectArtist
-                    id="category"
-                    register={register}
-                    value="Region"
-                    message="Region Is Required!"
-                >
-                    <option value="Popular" selected>
-                        Popular
-                    </option>
+                        <option value="Charts">Top Charts</option>
+                        <option value="Hits">Top Hits</option>
+                    </SelectArtist>
+                </div>
+                <div className={styles.row}>
+                    <label htmlFor="category" className={styles.selectLabel}>
+                        Select Region
+                    </label>
+                    <SelectArtist
+                        id="category"
+                        register={register}
+                        value="Region"
+                        message="Region Is Required!"
+                    >
+                        <option value="Popular" selected>
+                            Popular
+                        </option>
 
-                    <option value="Georgian">Georgian</option>
-                    <option value="European">European</option>
-                </SelectArtist>
-            </div>
-            <button type="submit" className={styles.confirm}>
-                Add Artist
-            </button>
-        </form>
+                        <option value="Georgian">Georgian</option>
+                        <option value="European">European</option>
+                    </SelectArtist>
+                </div>
+                <div className={styles.buttons}>
+                    <button type="submit" className={styles.confirm}>
+                        Upload Artist
+                    </button>
+                    {edit && (
+                        <button
+                            type="button"
+                            className={styles.delete}
+                            onClick={() => setDeleteConfirm(true)}
+                        >
+                            Delete Artist
+                        </button>
+                    )}
+                </div>
+            </form>
+            <DeletePopUp
+                name={'artist'}
+                section="artists"
+                open={deleteConfirm}
+                closeFunc={() => setDeleteConfirm(false)}
+                deleteString={`https://mukhambazi-back.onrender.com/authors/${id}`}
+                confirm={() => {
+                    setUploaded(true);
+                    setDeleteConfirm(false);
+                }}
+            />
+        </>
     );
 };
 

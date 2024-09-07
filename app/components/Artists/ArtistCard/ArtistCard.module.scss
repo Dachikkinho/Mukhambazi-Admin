@@ -48,3 +48,31 @@
     height: 121px;
     object-fit: cover;
 }
+
+
+.wrap {
+    position: relative;
+
+    .editButton {
+        width: 40px;
+        height: 40px;
+        padding: 10px;
+        border-radius: 50%;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2;
+
+
+        &:hover {
+            background-color: rgba(128, 128, 128, 0.258);
+        }
+    }
+}

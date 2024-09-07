@@ -10,6 +10,7 @@ import { MusicFormStatus } from './MusicFormStatus';
 import styles from '../../(authorised)/addMusic/page.module.scss';
 import { Album } from '@/app/interfaces/album.interface';
 import { Artists } from '@/app/interfaces/createArtist.interface';
+import DeletePopUp from '../DeletePopUp/DeletePopUp';
 
 export default function MusicForm() {
     const {
@@ -24,6 +25,7 @@ export default function MusicForm() {
     const id = param.get('id');
     const [albums, setAlbums] = useState<Album[]>([]);
     const [artists, setArtists] = useState<Artists[]>([]);
+    const [deleteConfirm, setDeleteConfirm] = useState(false);
 
     useEffect(() => {
         if (id) {
@@ -59,13 +61,6 @@ export default function MusicForm() {
                         name: music.name,
                         albumId: music.albumId,
                         authorId: music.authorId,
-                        file: music.file[0],
-                        image: music.image[0],
-                    },
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                        },
                     },
                 );
             } else {
@@ -97,16 +92,43 @@ export default function MusicForm() {
     return uploaded ? (
         <MusicFormStatus id={0} uploadedName={uploadedName} />
     ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-            <MusicFormFields
-                register={register}
-                errors={errors}
-                albums={albums}
-                artists={artists}
+        <>
+            <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+                <MusicFormFields
+                    register={register}
+                    errors={errors}
+                    albums={albums}
+                    artists={artists}
+                    files={!!!id}
+                />
+                <div className={styles.buttons}>
+                    <button type="submit" className={styles.confirm}>
+                        Add Music
+                    </button>
+                    {!!id && (
+                        <button
+                            type="button"
+                            className={styles.delete}
+                            onClick={() => setDeleteConfirm(true)}
+                        >
+                            Delete Music
+                        </button>
+                    )}
+                </div>
+            </form>
+            <DeletePopUp
+                closeFunc={() => {
+                    setDeleteConfirm(false);
+                }}
+                confirm={() => {
+                    setDeleteConfirm(false);
+                    setUploaded(true);
+                }}
+                name="music"
+                section="musics"
+                open={deleteConfirm}
+                deleteString={`https://mukhambazi-back.onrender.com/music/${id}`}
             />
-            <button type="submit" className={styles.confirm}>
-                Add Music
-            </button>
-        </form>
+        </>
     );
 }

@@ -6,9 +6,10 @@ import { FieldErrors, UseFormRegister } from 'react-hook-form';
 type Props = {
     register: UseFormRegister<CreateAuthor>;
     errors: FieldErrors<CreateAuthor>;
+    required: boolean;
 };
 
-export const ArtistImageInput = ({ register, errors }: Props) => (
+export const ArtistImageInput = ({ register, errors, required }: Props) => (
     <div className={styles.row}>
         <label htmlFor="img">Artist Image</label>
         <input
@@ -17,7 +18,7 @@ export const ArtistImageInput = ({ register, errors }: Props) => (
             className={styles.input}
             placeholder="Image"
             {...register('image', {
-                required: { value: true, message: 'Image is Required!' },
+                required: { value: required, message: 'Image is Required!' },
                 validate: {
                     fileType: (file: FileList) =>
                         ['png', 'jpg', 'jpeg'].includes(

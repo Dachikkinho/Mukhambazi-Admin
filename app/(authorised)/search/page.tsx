@@ -95,6 +95,7 @@ const SearchPage = (props: Props) => {
                                         bgColor={''}
                                         img={artist.image}
                                         plays={'2'}
+                                        id={artist.id}
                                     />
                                 </Link>
                             ))}
@@ -119,6 +120,7 @@ const SearchPage = (props: Props) => {
                                     songUrl={song.url}
                                     imageSrc={song.image}
                                     key={i}
+                                    id={song.id}
                                     onClick={() =>
                                         playMusic(
                                             songs,
@@ -154,6 +156,7 @@ const SearchPage = (props: Props) => {
                                         lastName={''}
                                         plays={album.releaseDate}
                                         image={album.image}
+                                        id={album.id}
                                     />
                                 </Link>
                             ))}

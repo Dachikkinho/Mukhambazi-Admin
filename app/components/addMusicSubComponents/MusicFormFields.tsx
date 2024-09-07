@@ -11,6 +11,7 @@ type Props = {
     errors: FieldErrors<CreateMusic>;
     albums: Album[];
     artists: Artists[];
+    files: boolean;
 };
 
 export const MusicFormFields = ({
@@ -18,6 +19,7 @@ export const MusicFormFields = ({
     errors,
     albums,
     artists,
+    files
 }: Props) => (
     <>
         <div className={styles.row}>
@@ -41,7 +43,7 @@ export const MusicFormFields = ({
             )}
         </div>
 
-        <div className={styles.row}>
+        { files && <><div className={styles.row}>
             <label htmlFor="file" className={styles.label}>
                 Music File
             </label>
@@ -81,7 +83,7 @@ export const MusicFormFields = ({
             {errors.image?.message && (
                 <ErrorMessage message={errors.image.message} />
             )}
-        </div>
+        </div> </>}
 
         <div className={styles.row}>
             <label htmlFor="albumId" className={styles.label}>

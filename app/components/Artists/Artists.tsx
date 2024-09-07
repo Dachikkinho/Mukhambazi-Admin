@@ -67,6 +67,7 @@ const ArtistsPage = () => {
                                     name={`${artist.firstName} ${artist.lastName}`}
                                     pfp={artist.image}
                                     plays={'2'}
+                                    id={artist.id}
                                 />
                             </Link>
                         ))}
@@ -91,6 +92,7 @@ const ArtistsPage = () => {
                                     name={`${artist.firstName} ${artist.lastName}`}
                                     pfp={artist.image}
                                     plays={'2'}
+                                    id={artist.id}
                                 />
                             </Link>
                         ))}
@@ -114,6 +116,7 @@ const ArtistsPage = () => {
                                     name={`${artist.firstName} ${artist.lastName}`}
                                     pfp={artist.image}
                                     plays={'2'}
+                                    id={artist.id}
                                 />
                             </Link>
                         ))}

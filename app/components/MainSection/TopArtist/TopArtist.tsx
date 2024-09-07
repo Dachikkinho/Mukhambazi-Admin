@@ -94,6 +94,7 @@ const TopArtist = () => {
                                 bgColor={''}
                                 img={artist.image}
                                 plays={'2'}
+                                id={artist.id}
                             />
                         </Link>
                     ),
@@ -120,6 +121,7 @@ const TopArtist = () => {
                                 bgColor={''}
                                 img={artist.image}
                                 plays={'2'}
+                                id={artist.id}
                             />
                         </Link>
                     ),
@@ -146,6 +148,7 @@ const TopArtist = () => {
                                 bgColor={''}
                                 img={artist.image}
                                 plays={'2'}
+                                id={artist.id}
                             />
                         </Link>
                     ),

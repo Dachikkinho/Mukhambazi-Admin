@@ -8,6 +8,7 @@ import { FormStatus } from '@/app/components/addAlbumSubComponents/FormStatus';
 import { CreateAlbum } from '@/app/interfaces/createAlbum.interface';
 import styles from '../../(authorised)/addAlbum/page.module.scss';
 import { AlbumFormFields } from './AlbumFormFields';
+import DeletePopUp from '../DeletePopUp/DeletePopUp';
 
 const AlbumForm = () => {
     const {
@@ -19,6 +20,7 @@ const AlbumForm = () => {
     const [uploaded, setUploaded] = useState(false);
     const [uploadedName, setUploadedName] = useState('');
     const [, setServerError] = useState<string | null>(null);
+    const [deleteConfirm, setDeleteConfirm] = useState(false);
 
     const param = useSearchParams();
     const id = param.get('id');
@@ -79,18 +81,49 @@ const AlbumForm = () => {
     };
 
     const updateAlbum = async (id: string, album: CreateAlbum) => {
-        await axios.patch(`https://mukhambazi-back.onrender.com/album/${id}`, album);
+        await axios.patch(
+            `https://mukhambazi-back.onrender.com/album/${id}`,
+            album,
+        );
     };
 
     return uploaded ? (
         <FormStatus id={id || ''} uploadedName={uploadedName} />
     ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-            <AlbumFormFields register={register} errors={errors} />
-            <button type="submit" className={styles.confirm}>
-                Add Album
-            </button>
-        </form>
+        <>
+            <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+                <AlbumFormFields
+                    register={register}
+                    errors={errors}
+                    update={!id}
+                />
+                <div className={styles.buttons}>
+                    <button type="submit" className={styles.confirm}>
+                        Add Album
+                    </button>
+                    {!!id && (
+                        <button
+                            type="button"
+                            className={styles.delete}
+                            onClick={() => setDeleteConfirm(true)}
+                        >
+                            Delete Artist
+                        </button>
+                    )}
+                </div>
+            </form>
+            <DeletePopUp
+                closeFunc={() => setDeleteConfirm(false)}
+                deleteString={`https://mukhambazi-back.onrender.com/album/${id}`}
+                name="album"
+                section="albums"
+                confirm={() => {
+                    setDeleteConfirm(false);
+                    setUploaded(true);
+                }}
+                open={deleteConfirm}
+            />
+        </>
     );
 };
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import AddSongButton from '../../AddSongButton/AddSongButton';
 import LikeButton from '../../LikeButton/LikeButton';
 import styles from './Song.module.scss';
+import Link from 'next/link';
 
 type Props = {
     name: string;
@@ -9,9 +10,10 @@ type Props = {
     imageSrc: string;
     onClick?: () => void;
     songUrl: string;
+    id: number;
 };
 
-const Song = ({ name, group, songUrl, imageSrc, onClick }: Props) => {
+const Song = ({ name, group, songUrl, imageSrc, onClick, id }: Props) => {
     const [duration, setDuration] = useState<string>('');
 
     useEffect(() => {
@@ -58,6 +60,9 @@ const Song = ({ name, group, songUrl, imageSrc, onClick }: Props) => {
             <div className={styles.like}>
                 <LikeButton />
             </div>
+            <Link href={`/addMusic?id=${id}`} className={styles.editButton}>
+                <img src="/icons/edit.svg" alt="edit" className={styles.edit} />
+            </Link>
         </div>
     );
 };

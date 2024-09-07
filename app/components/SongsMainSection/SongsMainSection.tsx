@@ -68,6 +68,7 @@ const SongsMainSection = () => {
                             songUrl={song.url}
                             imageSrc={song.image}
                             key={i}
+                            id={song.id}
                             onClick={() =>
                                 playMusic(
                                     songs,

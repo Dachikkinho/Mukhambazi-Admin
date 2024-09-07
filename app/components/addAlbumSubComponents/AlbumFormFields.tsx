@@ -10,9 +10,10 @@ import axios from 'axios';
 type Props = {
     register: UseFormRegister<CreateAlbum>;
     errors: FieldErrors<CreateAlbum>;
+    update: boolean
 };
 
-export const AlbumFormFields = ({ register, errors }: Props) => {
+export const AlbumFormFields = ({ register, errors, update }: Props) => {
     const [artists, setArtists] = useState<Artists[]>([]);
 
     useEffect(() => {
@@ -28,6 +29,7 @@ export const AlbumFormFields = ({ register, errors }: Props) => {
 
     return (
         <>
+        {update &&
             <div className={styles.row}>
                 <label htmlFor="img">Artist Image</label>
                 <input
@@ -51,7 +53,7 @@ export const AlbumFormFields = ({ register, errors }: Props) => {
                 {errors.image?.message && (
                     <ErrorMessage message={errors.image.message} />
                 )}
-            </div>
+            </div>}
             <div className={styles.row}>
                 <label htmlFor="name" className={styles.label}>
                     Album Name
