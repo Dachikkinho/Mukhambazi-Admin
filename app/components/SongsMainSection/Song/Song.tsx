@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AddSongButton from '../../AddSongButton/AddSongButton';
 import LikeButton from '../../LikeButton/LikeButton';
 import styles from './Song.module.scss';
-import Link from 'next/link';
 
 type Props = {
     name: string;
@@ -10,10 +9,9 @@ type Props = {
     imageSrc: string;
     onClick?: () => void;
     songUrl: string;
-    id: number;
 };
 
-const Song = ({ name, group, songUrl, imageSrc, onClick, id }: Props) => {
+const Song = ({ name, group, imageSrc, onClick, songUrl }: Props) => {
     const [duration, setDuration] = useState<string>('');
 
     useEffect(() => {
@@ -23,7 +21,9 @@ const Song = ({ name, group, songUrl, imageSrc, onClick, id }: Props) => {
             const audioDurationInSeconds = audio.duration;
             const minutes = Math.floor(audioDurationInSeconds / 60);
             const seconds = Math.floor(audioDurationInSeconds % 60);
-            setDuration(`${minutes}:${seconds}`);
+            setDuration(
+                `${minutes > 10 ? minutes : '0' + minutes}:${seconds > 10 ? seconds : '0' + seconds}`,
+            );
         };
 
         if (audio) {
@@ -36,6 +36,7 @@ const Song = ({ name, group, songUrl, imageSrc, onClick, id }: Props) => {
             };
         }
     }, [songUrl]);
+
     return (
         <div className={styles.container}>
             <img
@@ -43,11 +44,16 @@ const Song = ({ name, group, songUrl, imageSrc, onClick, id }: Props) => {
                 alt="song cover"
                 className={styles.imagePlaceHolder}
                 draggable={false}
+                onClick={onClick}
             />
             <div className={styles.info}>
-                <p className={styles.name}>{name}</p>
-                <p className={styles.name}>{group}</p>
-                <div className={styles.infoBottom}>
+                <p onClick={onClick} className={styles.name}>
+                    {name}
+                </p>
+                <p onClick={onClick} className={styles.name}>
+                    {group}
+                </p>
+                <div onClick={onClick} className={styles.infoBottom}>
                     <p className={styles.name}>{duration}</p>
                     <button className={styles.play} onClick={onClick}>
                         Play Now
@@ -55,14 +61,11 @@ const Song = ({ name, group, songUrl, imageSrc, onClick, id }: Props) => {
                 </div>
             </div>
             <div className={styles.add}>
-                <AddSongButton songId={name} />
+                <AddSongButton />
             </div>
             <div className={styles.like}>
                 <LikeButton />
             </div>
-            <Link href={`/addMusic?id=${id}`} className={styles.editButton}>
-                <img src="/icons/edit.svg" alt="edit" className={styles.edit} />
-            </Link>
         </div>
     );
 };

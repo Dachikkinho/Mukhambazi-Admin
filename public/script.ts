@@ -56,7 +56,7 @@ export const forYouItems = [
 
 export const adminPanel = [
     {
-        name: "Upload",
+        name: "Admin Menu",
         img: "songs-icon",
         link: "/addArtist"
     },

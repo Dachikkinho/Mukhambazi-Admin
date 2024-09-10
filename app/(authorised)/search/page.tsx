@@ -116,11 +116,10 @@ const SearchPage = (props: Props) => {
                             {songs.map((song, i) => (
                                 <Song
                                     name={song.name}
-                                    group={``}
+                                    group={`${song.author.firstName} ${song.author.lastName}`}
                                     songUrl={song.url}
                                     imageSrc={song.image}
                                     key={i}
-                                    id={song.id}
                                     onClick={() =>
                                         playMusic(
                                             songs,
@@ -130,6 +129,7 @@ const SearchPage = (props: Props) => {
                                             song.name,
                                             i,
                                             song.image,
+                                            `${song.author.firstName} ${song.author.lastName}`,
                                         )
                                     }
                                 />

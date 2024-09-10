@@ -45,13 +45,13 @@ const DeletePopUp = ({
                                 className={`${styles.button} ${styles.no}`}
                                 onClick={closeFunc}
                             >
-                                no
+                                No
                             </button>
                             <button
                                 className={`${styles.button} ${styles.yes}`}
                                 onClick={deleteBackend}
                             >
-                                yes
+                                Yes
                             </button>
                         </div>
                     </div>

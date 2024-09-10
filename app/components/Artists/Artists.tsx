@@ -6,30 +6,70 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import LoadingBar from 'react-top-loading-bar';
 import axios from 'axios';
-import { Artists } from '@/app/interfaces/createArtist.interface';
+import { Artists } from '@/app/interfaces/artist.interface';
 
 const ArtistsPage = () => {
-    const [artists, setArtists] = useState<Artists[]>([]);
+    const [popular, setPopular] = useState<Artists[]>([]);
+    const [georgian, setGeorgian] = useState<Artists[]>([]);
+    const [European, setEuropean] = useState<Artists[]>([]);
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
         axios
-            .get('https://back.chakrulos.ge/authors', {
-                onDownloadProgress: (progressEvent) => {
-                    const { loaded, total } = progressEvent;
+            .all([
+                axios.get(
+                    `https://back.chakrulos.ge/authors/category/Popular`,
+                    {
+                        onDownloadProgress: (progressEvent) => {
+                            const { loaded, total } = progressEvent;
 
-                    if (total) {
-                        const percentage = Math.floor((loaded / total) * 100);
-                        setProgress(percentage);
-                        console.log(
-                            `Downloaded: ${Math.floor((loaded / total) * 100)}%`,
-                        );
-                    }
-                },
-            })
-            .then((res) => {
-                setArtists([...res.data]);
-            });
+                            if (total) {
+                                const percentage = Math.floor(
+                                    (loaded / total) * 100,
+                                );
+                                setProgress(percentage);
+                            }
+                        },
+                    },
+                ),
+                axios.get(
+                    `https://back.chakrulos.ge/authors/category/Georgian`,
+                    {
+                        onDownloadProgress: (progressEvent) => {
+                            const { loaded, total } = progressEvent;
+
+                            if (total) {
+                                const percentage = Math.floor(
+                                    (loaded / total) * 100,
+                                );
+                                setProgress(percentage);
+                            }
+                        },
+                    },
+                ),
+                axios.get(
+                    'https://back.chakrulos.ge/authors/category/European',
+                    {
+                        onDownloadProgress: (progressEvent) => {
+                            const { loaded, total } = progressEvent;
+
+                            if (total) {
+                                const percentage = Math.floor(
+                                    (loaded / total) * 100,
+                                );
+                                setProgress(percentage);
+                            }
+                        },
+                    },
+                ),
+            ])
+            .then(
+                axios.spread((popular, georgian, european) => {
+                    setPopular(popular.data);
+                    setGeorgian(georgian.data);
+                    setEuropean(european.data);
+                }),
+            );
     }, []);
 
     return (
@@ -55,7 +95,7 @@ const ArtistsPage = () => {
                         icon={'popular'}
                     />
                     <div className={styles.cards}>
-                        {artists.map((artist, i) => (
+                        {popular.map((artist, i) => (
                             <Link
                                 key={i}
                                 href={`/artists/${artist.id}`}
@@ -67,20 +107,18 @@ const ArtistsPage = () => {
                                     name={`${artist.firstName} ${artist.lastName}`}
                                     pfp={artist.image}
                                     plays={'2'}
-                                    id={artist.id}
                                 />
                             </Link>
                         ))}
                     </div>
                 </div>
-
                 <div>
                     <ArtistcardHeader
                         title={'Georgian Artists'}
                         icon={'wine-glass-solid'}
                     />
                     <div className={styles.cards}>
-                        {artists.map((artist, i) => (
+                        {georgian.map((artist, i) => (
                             <Link
                                 key={i}
                                 href={`/artists/${artist.id}`}
@@ -92,7 +130,6 @@ const ArtistsPage = () => {
                                     name={`${artist.firstName} ${artist.lastName}`}
                                     pfp={artist.image}
                                     plays={'2'}
-                                    id={artist.id}
                                 />
                             </Link>
                         ))}
@@ -104,7 +141,7 @@ const ArtistsPage = () => {
                         icon={'earth-europe-solid'}
                     />
                     <div className={styles.cards}>
-                        {artists.map((artist, i) => (
+                        {European.map((artist, i) => (
                             <Link
                                 key={i}
                                 href={`/artists/${artist.id}`}
@@ -116,7 +153,6 @@ const ArtistsPage = () => {
                                     name={`${artist.firstName} ${artist.lastName}`}
                                     pfp={artist.image}
                                     plays={'2'}
-                                    id={artist.id}
                                 />
                             </Link>
                         ))}
