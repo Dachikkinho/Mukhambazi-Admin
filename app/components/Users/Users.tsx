@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from '../../(authorised)/UserManagement/page.module.scss';
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 interface User {
     id: number;
     email: string;
-    isBlocked: boolean;
+    blocked: boolean;
     createdAt: string;
 }
 
@@ -17,25 +17,33 @@ const UserManagement: React.FC = () => {
     const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
     const [newPassword, setNewPassword] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [lastUserBlocked, setLastUserBlocked] = useState(0);
 
     useEffect(() => {
         const fetchUsers = async () => {
             setLoading(true);
             setError(null);
             try {
-                const response = await axios.get('https://back.chakrulos.ge/users');
+                const response = await axios.get(
+                    'https://back.chakrulos.ge/users',
+                );
                 const usersData = response.data;
                 setUsers(usersData);
             } catch (error: unknown) {
                 if (axios.isAxiosError(error)) {
-                    console.error('Error fetching users:', error.response?.data || error.message);
+                    console.error(
+                        'Error fetching users:',
+                        error.response?.data || error.message,
+                    );
                     setError('Error fetching users. Please try again later.');
                 } else if (error instanceof Error) {
                     console.error('Error fetching users:', error.message);
                     setError('Error fetching users. Please try again later.');
                 } else {
                     console.error('An unknown error occurred');
-                    setError('An unknown error occurred. Please try again later.');
+                    setError(
+                        'An unknown error occurred. Please try again later.',
+                    );
                 }
             } finally {
                 setLoading(false);
@@ -43,12 +51,11 @@ const UserManagement: React.FC = () => {
         };
 
         fetchUsers();
-    }, []);
+    }, [lastUserBlocked]);
 
     const handleBlockUser = async (id: number, isBlocked: boolean) => {
         try {
-            const action = isBlocked ? 'unblock' : 'block';
-            await axios.patch(`https://back.chakrulos.ge/users/${action}/${id}`);
+            await axios.patch(`https://back.chakrulos.ge/users/block/${id}`);
             setUsers((prevUsers) =>
                 prevUsers.map((user) =>
                     user.id === id ? { ...user, isBlocked: !isBlocked } : user,
@@ -56,24 +63,41 @@ const UserManagement: React.FC = () => {
             );
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
-                console.error(`Error ${isBlocked ? 'unblocking' : 'blocking'} user:`, error.response?.data || error.message);
+                console.error(
+                    `Error ${isBlocked ? 'unblocking' : 'blocking'} user:`,
+                    error.response?.data || error.message,
+                );
             } else if (error instanceof Error) {
-                console.error(`Error ${isBlocked ? 'unblocking' : 'blocking'} user:`, error.message);
+                console.error(
+                    `Error ${isBlocked ? 'unblocking' : 'blocking'} user:`,
+                    error.message,
+                );
             } else {
                 console.error('An unknown error occurred');
             }
+        }
+        if (lastUserBlocked === 0) {
+            setLastUserBlocked(id);
+        } else {
+            setLastUserBlocked(0);
         }
     };
 
     const handlePasswordChange = async (id: number) => {
         try {
-            await axios.patch(`https://back.chakrulos.ge/users/password/${id}`, { password: newPassword });
+            await axios.patch(
+                `https://back.chakrulos.ge/users/password/${id}`,
+                { password: newPassword },
+            );
             alert('Password changed successfully!');
-            setSelectedUserId(null); 
+            setSelectedUserId(null);
             setNewPassword('');
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
-                console.error('Error changing password:', error.response?.data || error.message);
+                console.error(
+                    'Error changing password:',
+                    error.response?.data || error.message,
+                );
             } else if (error instanceof Error) {
                 console.error('Error changing password:', error.message);
             } else {
@@ -111,42 +135,75 @@ const UserManagement: React.FC = () => {
                                         {user.email || 'Email not available'}
                                     </td>
                                     <td className={styles.tableCell}>
-                                        {user.isBlocked ? 'Blocked' : 'Active'}
+                                        {user.blocked ? 'Blocked' : 'Active'}
                                     </td>
                                     <td className={styles.tableCell}>
                                         <button
                                             onClick={() =>
-                                                handleBlockUser(user.id, user.isBlocked)
+                                                handleBlockUser(
+                                                    user.id,
+                                                    user.blocked,
+                                                )
                                             }
                                         >
-                                            {user.isBlocked ? 'Unblock' : 'Block'}
+                                            {user.blocked ? 'Unblock' : 'Block'}
                                         </button>
                                     </td>
                                     <td className={styles.tableCell}>
                                         <button
-                                            onClick={() => setSelectedUserId(user.id)}
+                                            onClick={() =>
+                                                setSelectedUserId(user.id)
+                                            }
                                         >
                                             Change Password
                                         </button>
                                         {selectedUserId === user.id && (
-                                            <div className={styles.changePasswordWrapper}>
-                                                <div className={styles.inputWrapper}>
+                                            <div
+                                                className={
+                                                    styles.changePasswordWrapper
+                                                }
+                                            >
+                                                <div
+                                                    className={
+                                                        styles.inputWrapper
+                                                    }
+                                                >
                                                     <input
-                                                        type={passwordVisible ? 'text' : 'password'}
+                                                        type={
+                                                            passwordVisible
+                                                                ? 'text'
+                                                                : 'password'
+                                                        }
                                                         value={newPassword}
-                                                        onChange={(e) => setNewPassword(e.target.value)}
+                                                        onChange={(e) =>
+                                                            setNewPassword(
+                                                                e.target.value,
+                                                            )
+                                                        }
                                                         placeholder="Enter new password"
                                                     />
                                                     <button
                                                         type="button"
-                                                        onClick={togglePasswordVisibility}
-                                                        className={styles.eyeButton}
+                                                        onClick={
+                                                            togglePasswordVisibility
+                                                        }
+                                                        className={
+                                                            styles.eyeButton
+                                                        }
                                                     >
-                                                        {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+                                                        {passwordVisible ? (
+                                                            <FaEyeSlash />
+                                                        ) : (
+                                                            <FaEye />
+                                                        )}
                                                     </button>
                                                 </div>
                                                 <button
-                                                    onClick={() => handlePasswordChange(user.id)}
+                                                    onClick={() =>
+                                                        handlePasswordChange(
+                                                            user.id,
+                                                        )
+                                                    }
                                                 >
                                                     Submit
                                                 </button>
