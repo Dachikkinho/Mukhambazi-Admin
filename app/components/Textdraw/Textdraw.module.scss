@@ -1,0 +1,19 @@
+.textdraw {
+    position: fixed;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to right, #982fc9, #182848);
+    color: #ffffff;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-family: 'Arial, sans-serif';
+    font-size: 16px;
+    z-index: 1000;
+    transition: top 0.5s ease-in-out;
+}
+
+.textdraw.show {
+    top: 20px; 
+}

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import AddSongButton from '../../AddSongButton/AddSongButton';
 import LikeButton from '../../LikeButton/LikeButton';
 import styles from './Song.module.scss';
-import Link from 'next/link';
 
 type Props = {
     name: string;
@@ -68,9 +67,6 @@ const Song = ({ name, group, imageSrc, onClick, songUrl, id }: Props) => {
             <div className={styles.like}>
                 <LikeButton />
             </div>
-            <Link href={`/addMusic?id=${id}`} className={styles.editButton}>
-                <img src="/icons/edit.svg" alt="edit" className={styles.edit} />
-            </Link>
         </div>
     );
 };

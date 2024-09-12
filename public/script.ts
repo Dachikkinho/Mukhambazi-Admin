@@ -55,12 +55,15 @@ export const forYouItems = [
 ];
 
 
-
-
 export const adminPanel = [
     {
-        name: 'Upload',
-        img: 'songs-icon',
-        link: '/addArtist',
+        name: "Admin Menu",
+        img: "songs-icon",
+        link: "/addArtist"
     },
-];
+]
+
+
+
+
+
