@@ -6,70 +6,34 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import LoadingBar from 'react-top-loading-bar';
 import axios from 'axios';
-import { Artists } from '@/app/interfaces/artist.interface';
+import { Artists } from '@/app/interfaces/createArtist.interface';
 
 const ArtistsPage = () => {
-    const [popular, setPopular] = useState<Artists[]>([]);
-    const [georgian, setGeorgian] = useState<Artists[]>([]);
-    const [European, setEuropean] = useState<Artists[]>([]);
+    const [artists, setArtists] = useState<Artists[]>([]);
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
+        const jwt = localStorage.getItem('user');
         axios
-            .all([
-                axios.get(
-                    `https://back.chakrulos.ge/authors/category/Popular`,
-                    {
-                        onDownloadProgress: (progressEvent) => {
-                            const { loaded, total } = progressEvent;
+            .get('https://back.chakrulos.ge/authors', {
+                onDownloadProgress: (progressEvent) => {
+                    const { loaded, total } = progressEvent;
 
-                            if (total) {
-                                const percentage = Math.floor(
-                                    (loaded / total) * 100,
-                                );
-                                setProgress(percentage);
-                            }
-                        },
-                    },
-                ),
-                axios.get(
-                    `https://back.chakrulos.ge/authors/category/Georgian`,
-                    {
-                        onDownloadProgress: (progressEvent) => {
-                            const { loaded, total } = progressEvent;
-
-                            if (total) {
-                                const percentage = Math.floor(
-                                    (loaded / total) * 100,
-                                );
-                                setProgress(percentage);
-                            }
-                        },
-                    },
-                ),
-                axios.get(
-                    'https://back.chakrulos.ge/authors/category/European',
-                    {
-                        onDownloadProgress: (progressEvent) => {
-                            const { loaded, total } = progressEvent;
-
-                            if (total) {
-                                const percentage = Math.floor(
-                                    (loaded / total) * 100,
-                                );
-                                setProgress(percentage);
-                            }
-                        },
-                    },
-                ),
-            ])
-            .then(
-                axios.spread((popular, georgian, european) => {
-                    setPopular(popular.data);
-                    setGeorgian(georgian.data);
-                    setEuropean(european.data);
-                }),
-            );
+                    if (total) {
+                        const percentage = Math.floor((loaded / total) * 100);
+                        setProgress(percentage);
+                        console.log(
+                            `Downloaded: ${Math.floor((loaded / total) * 100)}%`,
+                        );
+                    }
+                },
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            })
+            .then((res) => {
+                setArtists([...res.data]);
+            });
     }, []);
 
     return (
@@ -95,7 +59,7 @@ const ArtistsPage = () => {
                         icon={'popular'}
                     />
                     <div className={styles.cards}>
-                        {popular.map((artist, i) => (
+                        {artists.map((artist, i) => (
                             <Link
                                 key={i}
                                 href={`/artists/${artist.id}`}
@@ -107,18 +71,20 @@ const ArtistsPage = () => {
                                     name={`${artist.firstName} ${artist.lastName}`}
                                     pfp={artist.image}
                                     plays={'2'}
+                                    id={artist.id}
                                 />
                             </Link>
                         ))}
                     </div>
                 </div>
+
                 <div>
                     <ArtistcardHeader
                         title={'Georgian Artists'}
                         icon={'wine-glass-solid'}
                     />
                     <div className={styles.cards}>
-                        {georgian.map((artist, i) => (
+                        {artists.map((artist, i) => (
                             <Link
                                 key={i}
                                 href={`/artists/${artist.id}`}
@@ -130,6 +96,7 @@ const ArtistsPage = () => {
                                     name={`${artist.firstName} ${artist.lastName}`}
                                     pfp={artist.image}
                                     plays={'2'}
+                                    id={artist.id}
                                 />
                             </Link>
                         ))}
@@ -141,7 +108,7 @@ const ArtistsPage = () => {
                         icon={'earth-europe-solid'}
                     />
                     <div className={styles.cards}>
-                        {European.map((artist, i) => (
+                        {artists.map((artist, i) => (
                             <Link
                                 key={i}
                                 href={`/artists/${artist.id}`}
@@ -153,6 +120,7 @@ const ArtistsPage = () => {
                                     name={`${artist.firstName} ${artist.lastName}`}
                                     pfp={artist.image}
                                     plays={'2'}
+                                    id={artist.id}
                                 />
                             </Link>
                         ))}

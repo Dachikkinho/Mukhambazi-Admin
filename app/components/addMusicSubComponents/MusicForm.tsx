@@ -28,9 +28,14 @@ export default function MusicForm() {
     const [deleteConfirm, setDeleteConfirm] = useState(false);
 
     useEffect(() => {
+        const jwt = localStorage.getItem('user');
         if (id) {
             axios
-                .get(`https://mukhambazi-back.onrender.com/music/${id}`)
+                .get(`https://mukhambazi-back.onrender.com/music/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`,
+                    },
+                })
                 .then((res) => {
                     reset(res.data);
                 })
@@ -41,18 +46,30 @@ export default function MusicForm() {
     }, [id]);
 
     useEffect(() => {
-        axios.get('https://mukhambazi-back.onrender.com/album/').then((res) => {
-            setAlbums(res.data);
-        });
+        const jwt = localStorage.getItem('user');
+        axios
+            .get('https://mukhambazi-back.onrender.com/album/', {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            })
+            .then((res) => {
+                setAlbums(res.data);
+            });
 
         axios
-            .get('https://mukhambazi-back.onrender.com/authors/')
+            .get('https://mukhambazi-back.onrender.com/authors/', {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            })
             .then((res) => {
                 setArtists(res.data);
             });
     }, []);
 
     const onSubmit = async (music: CreateMusic) => {
+        const jwt = localStorage.getItem('user');
         try {
             if (id) {
                 await axios.patch(
@@ -61,6 +78,11 @@ export default function MusicForm() {
                         name: music.name,
                         albumId: music.albumId,
                         authorId: music.authorId,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${jwt}`,
+                        },
                     },
                 );
             } else {
@@ -77,6 +99,7 @@ export default function MusicForm() {
                     {
                         headers: {
                             'Content-Type': 'multipart/form-data',
+                            Authorization: `Bearer ${jwt}`,
                         },
                     },
                 );
@@ -99,7 +122,7 @@ export default function MusicForm() {
                     errors={errors}
                     albums={albums}
                     artists={artists}
-                    files={!!!id}
+                    files={!id}
                 />
                 <div className={styles.buttons}>
                     <button type="submit" className={styles.confirm}>

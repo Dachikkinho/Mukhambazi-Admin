@@ -12,6 +12,7 @@ const Albums = () => {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
+        const jwt = localStorage.getItem('user');
         axios
             .get('https://back.chakrulos.ge/album', {
                 onDownloadProgress: (progressEvent) => {
@@ -21,6 +22,9 @@ const Albums = () => {
                         const percentage = Math.floor((loaded / total) * 100);
                         setProgress(percentage);
                     }
+                },
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
                 },
             })
             .then((res) => {
@@ -36,7 +40,6 @@ const Albums = () => {
                 onLoaderFinished={() => setProgress(0)}
                 loaderSpeed={600}
             />
-            <div className={styles.responsiveTitle}></div>
             <div className={styles.topContainer}>
                 <Search
                     placeholder={'Enter keywords to search'}

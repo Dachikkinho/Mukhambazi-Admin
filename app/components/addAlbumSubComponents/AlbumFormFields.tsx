@@ -17,8 +17,13 @@ export const AlbumFormFields = ({ register, errors, update }: Props) => {
     const [artists, setArtists] = useState<Artists[]>([]);
 
     useEffect(() => {
+        const jwt = localStorage.getItem('user');
         axios
-            .get('https://mukhambazi-back.onrender.com/authors')
+            .get('https://mukhambazi-back.onrender.com/authors', {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            })
             .then((res) => {
                 setArtists(res.data);
             })
