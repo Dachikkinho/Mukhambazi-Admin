@@ -1,17 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
 import styles from './Done.module.scss';
 
-export function Done() {
-    const Playit = () => {
-        const audio = new Audio('/sound/new-notification-7-210334.mp3');
-        audio.play();
-    };
-    useEffect(() => {
-        Playit();
-    }, []);
-
+const Done = () => {
     return (
         <svg
             className={styles.cont}
@@ -73,4 +64,6 @@ export function Done() {
             />
         </svg>
     );
-}
+};
+
+export default Done;

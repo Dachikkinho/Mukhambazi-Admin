@@ -1,9 +1,10 @@
 'use client';
 
 import { Select } from '@/app/components/Select/Select';
+import { UseFormRegister } from 'react-hook-form';
 
 type Props = {
-    register: any;
+    register: UseFormRegister<any>;
     value: string;
     message: string;
     children: React.ReactNode;

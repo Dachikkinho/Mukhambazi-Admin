@@ -1,5 +1,5 @@
 import styles from '../../(authorised)/addArtist/page.module.scss';
-import { Done } from '@/app/components/Done/Done';
+import Done from '../Done/Done';
 
 type Props = {
     id: string;

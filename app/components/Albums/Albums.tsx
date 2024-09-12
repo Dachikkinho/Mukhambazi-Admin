@@ -40,7 +40,6 @@ const Albums = () => {
                 onLoaderFinished={() => setProgress(0)}
                 loaderSpeed={600}
             />
-            <div className={styles.responsiveTitle}></div>
             <div className={styles.topContainer}>
                 <Search
                     placeholder={'Enter keywords to search'}
@@ -67,7 +66,6 @@ const Albums = () => {
                             lastName={''}
                             plays={album.releaseDate}
                             image={album.image}
-                            id={album.id}
                         />
                     </Link>
                 ))}

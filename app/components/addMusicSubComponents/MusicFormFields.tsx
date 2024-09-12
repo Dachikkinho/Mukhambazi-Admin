@@ -19,7 +19,7 @@ export const MusicFormFields = ({
     errors,
     albums,
     artists,
-    files
+    files,
 }: Props) => (
     <>
         <div className={styles.row}>
@@ -43,47 +43,58 @@ export const MusicFormFields = ({
             )}
         </div>
 
-        { files && <><div className={styles.row}>
-            <label htmlFor="file" className={styles.label}>
-                Music File
-            </label>
-            <input
-                type="file"
-                id="file"
-                className={styles.input}
-                placeholder="Music File"
-                {...register('file', {
-                    required: { value: true, message: 'MP3 is Required!' },
-                })}
-            />
-            {errors.file?.message && (
-                <ErrorMessage message={errors.file.message} />
-            )}
-        </div>
-
-        <div className={styles.row}>
-            <label htmlFor="image" className={styles.label}>
-                Music Image
-            </label>
-            <input
-                type="file"
-                id="image"
-                className={styles.input}
-                placeholder="Image"
-                {...register('image', {
-                    required: { value: true, message: 'Image is Required!' },
-                    validate: {
-                        fileType: (file: FileList) =>
-                            ['png', 'jpg', 'jpeg'].includes(
-                                file[0].type.split('/')[1].toLowerCase(),
-                            ) || 'The file type should be Image',
-                    },
-                })}
-            />
-            {errors.image?.message && (
-                <ErrorMessage message={errors.image.message} />
-            )}
-        </div> </>}
+        {files && (
+            <>
+                <div className={styles.row}>
+                    <label htmlFor="file" className={styles.label}>
+                        Music File
+                    </label>
+                    <input
+                        type="file"
+                        id="file"
+                        className={styles.input}
+                        placeholder="Music File"
+                        {...register('file', {
+                            required: {
+                                value: true,
+                                message: 'MP3 is Required!',
+                            },
+                        })}
+                    />
+                    {errors.file?.message && (
+                        <ErrorMessage message={errors.file.message} />
+                    )}
+                </div>
+                <div className={styles.row}>
+                    <label htmlFor="image" className={styles.label}>
+                        Music Image
+                    </label>
+                    <input
+                        type="file"
+                        id="image"
+                        className={styles.input}
+                        placeholder="Image"
+                        {...register('image', {
+                            required: {
+                                value: true,
+                                message: 'Image is Required!',
+                            },
+                            validate: {
+                                fileType: (file: FileList) =>
+                                    ['png', 'jpg', 'jpeg'].includes(
+                                        file[0].type
+                                            .split('/')[1]
+                                            .toLowerCase(),
+                                    ) || 'The file type should be Image',
+                            },
+                        })}
+                    />
+                    {errors.image?.message && (
+                        <ErrorMessage message={errors.image.message} />
+                    )}
+                </div>{' '}
+            </>
+        )}
 
         <div className={styles.row}>
             <label htmlFor="albumId" className={styles.label}>

@@ -122,7 +122,7 @@ export default function MusicForm() {
                     errors={errors}
                     albums={albums}
                     artists={artists}
-                    files={!!!id}
+                    files={!id}
                 />
                 <div className={styles.buttons}>
                     <button type="submit" className={styles.confirm}>
