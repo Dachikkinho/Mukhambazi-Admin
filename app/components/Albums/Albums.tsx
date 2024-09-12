@@ -66,6 +66,7 @@ const Albums = () => {
                             lastName={''}
                             plays={album.releaseDate}
                             image={album.image}
+                            id={album.id}
                         />
                     </Link>
                 ))}

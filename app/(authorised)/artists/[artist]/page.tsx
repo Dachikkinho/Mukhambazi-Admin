@@ -118,6 +118,7 @@ const Artist = () => {
                                         name={`${album.name}` || ''}
                                         lastName=""
                                         plays={album.releaseDate}
+                                        id={album.id}
                                     />
                                 </Link>
                             ))}
