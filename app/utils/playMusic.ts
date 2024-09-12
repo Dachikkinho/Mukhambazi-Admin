@@ -12,17 +12,15 @@ export function playMusic(
         image: string;
         artistName: string;
     }>,
-    src: string,
-    name: string,
+    song: Music,
     index: number,
-    image: string,
 ) {
     setIsPlaying({
-        src: src,
-        name: name,
+        src: song.url,
+        name: song.name,
         index: index,
-        image: image,
-        artistName: 'placeholder',
+        image: song.image,
+        artistName: `${song.author.firstName} ${song.author.lastName}`,
     });
 
     const songsArr: nextSong[] = [];
@@ -33,7 +31,7 @@ export function playMusic(
             src: song.url,
             name: song.name,
             index: i,
-            artistName: `placeholder`,
+            artistName: `${song.author.firstName} ${song.author.lastName}`,
             image: song.image,
         };
 
