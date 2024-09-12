@@ -63,11 +63,20 @@ const UserManagement: React.FC = () => {
     }, [lastUserBlocked]);
 
     const handleBlockUser = async (id: number, isBlocked: boolean) => {
+        const jwt = localStorage.getItem('user');
         try {
-            await axios.patch(`https://back.chakrulos.ge/users/block/${id}`);
+            await axios.patch(
+                `https://back.chakrulos.ge/users/block/${id}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`,
+                    },
+                },
+            );
             setUsers((prevUsers) =>
                 prevUsers.map((user) =>
-                    user.id === id ? { ...user, isBlocked: !isBlocked } : user,
+                    user.id === id ? { ...user, blocked: !isBlocked } : user,
                 ),
             );
         } catch (error: unknown) {
@@ -89,10 +98,17 @@ const UserManagement: React.FC = () => {
     };
 
     const handlePasswordChange = async (id: number) => {
+        const jwt = localStorage.getItem('user');
         try {
-            await axios.patch(`https://back.chakrulos.ge/users/${id}`, {
-                password: newPassword,
-            });
+            await axios.patch(
+                `https://back.chakrulos.ge/users/${id}`,
+                { password: newPassword },
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`,
+                    },
+                },
+            );
             setTextdrawMessage('Password changed successfully!');
             setShowTextdraw(true);
             setSelectedUserId(null);
@@ -138,10 +154,13 @@ const UserManagement: React.FC = () => {
                                 users.map((user) => (
                                     <tr key={user.id}>
                                         <td className={styles.tableCell}>
-                                            {user.email || 'Email not available'}
+                                            {user.email ||
+                                                'Email not available'}
                                         </td>
                                         <td className={styles.tableCell}>
-                                            {user.blocked ? 'Blocked' : 'Active'}
+                                            {user.blocked
+                                                ? 'Blocked'
+                                                : 'Active'}
                                         </td>
                                         <td className={styles.tableCell}>
                                             <button
@@ -152,7 +171,9 @@ const UserManagement: React.FC = () => {
                                                     )
                                                 }
                                             >
-                                                {user.blocked ? 'Unblock' : 'Block'}
+                                                {user.blocked
+                                                    ? 'Unblock'
+                                                    : 'Block'}
                                             </button>
                                         </td>
                                         <td className={styles.tableCell}>
@@ -183,7 +204,8 @@ const UserManagement: React.FC = () => {
                                                             value={newPassword}
                                                             onChange={(e) =>
                                                                 setNewPassword(
-                                                                    e.target.value,
+                                                                    e.target
+                                                                        .value,
                                                                 )
                                                             }
                                                             placeholder="Enter new password"
@@ -220,7 +242,10 @@ const UserManagement: React.FC = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td className={styles.tableCell} colSpan={4}>
+                                    <td
+                                        className={styles.tableCell}
+                                        colSpan={4}
+                                    >
                                         No users found
                                     </td>
                                 </tr>
