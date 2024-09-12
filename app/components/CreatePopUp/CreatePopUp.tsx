@@ -19,10 +19,17 @@ const CreatePopUp = ({ closeMenuFunction }: Props) => {
     const [success, setSuccess] = useState(false);
 
     function onSubmit(album: Playlist) {
-        axios.post('http://localhost:3001/playlist', album).then(() => {
-            reset();
-            setSuccess(true);
-        });
+        const jwt = localStorage.getItem('user');
+        axios
+            .post('http://localhost:3001/playlist', album, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            })
+            .then(() => {
+                reset();
+                setSuccess(true);
+            });
     }
 
     return (

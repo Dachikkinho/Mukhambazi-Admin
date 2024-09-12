@@ -32,9 +32,15 @@ const AlbumForm = () => {
     }, [id]);
 
     const fetchAlbumData = async (id: string) => {
+        const jwt = localStorage.getItem('user');
         try {
             const response = await axios.get(
                 `https://mukhambazi-back.onrender.com/album/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`,
+                    },
+                },
             );
             reset(response.data);
         } catch (error) {
@@ -62,6 +68,7 @@ const AlbumForm = () => {
     };
 
     const createAlbum = async (album: CreateAlbum) => {
+        const jwt = localStorage.getItem('user');
         await axios.post(
             'https://mukhambazi-back.onrender.com/album/',
             {
@@ -75,15 +82,22 @@ const AlbumForm = () => {
             {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${jwt}`,
                 },
             },
         );
     };
 
     const updateAlbum = async (id: string, album: CreateAlbum) => {
+        const jwt = localStorage.getItem('user');
         await axios.patch(
             `https://mukhambazi-back.onrender.com/album/${id}`,
             album,
+            {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            },
         );
     };
 

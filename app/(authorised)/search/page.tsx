@@ -36,6 +36,7 @@ const SearchPage = (props: Props) => {
     const setNextSongArr = useSetRecoilState(nextSongArrState);
 
     useEffect(() => {
+        const jwt = localStorage.getItem('user');
         axios
             .get(
                 `https://back.chakrulos.ge/search/${props.searchParams.query}`,
@@ -49,6 +50,9 @@ const SearchPage = (props: Props) => {
                             );
                             setProgress(percentage);
                         }
+                    },
+                    headers: {
+                        Authorization: `Bearer ${jwt}`,
                     },
                 },
             )

@@ -13,6 +13,7 @@ const ArtistsPage = () => {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
+        const jwt = localStorage.getItem('user');
         axios
             .get('https://back.chakrulos.ge/authors', {
                 onDownloadProgress: (progressEvent) => {
@@ -25,6 +26,9 @@ const ArtistsPage = () => {
                             `Downloaded: ${Math.floor((loaded / total) * 100)}%`,
                         );
                     }
+                },
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
                 },
             })
             .then((res) => {

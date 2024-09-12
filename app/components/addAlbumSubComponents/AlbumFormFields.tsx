@@ -10,15 +10,20 @@ import axios from 'axios';
 type Props = {
     register: UseFormRegister<CreateAlbum>;
     errors: FieldErrors<CreateAlbum>;
-    update: boolean
+    update: boolean;
 };
 
 export const AlbumFormFields = ({ register, errors, update }: Props) => {
     const [artists, setArtists] = useState<Artists[]>([]);
 
     useEffect(() => {
+        const jwt = localStorage.getItem('user');
         axios
-            .get('https://mukhambazi-back.onrender.com/authors')
+            .get('https://mukhambazi-back.onrender.com/authors', {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            })
             .then((res) => {
                 setArtists(res.data);
             })
@@ -29,31 +34,34 @@ export const AlbumFormFields = ({ register, errors, update }: Props) => {
 
     return (
         <>
-        {update &&
-            <div className={styles.row}>
-                <label htmlFor="img">Artist Image</label>
-                <input
-                    type="file"
-                    id="img"
-                    className={styles.input}
-                    placeholder="Image"
-                    {...register('image', {
-                        required: {
-                            value: true,
-                            message: 'Image is Required!',
-                        },
-                        validate: {
-                            fileType: (file: FileList) =>
-                                ['png', 'jpg', 'jpeg'].includes(
-                                    file[0].type.split('/')[1].toLowerCase(),
-                                ) || 'The file type should be Image',
-                        },
-                    })}
-                />
-                {errors.image?.message && (
-                    <ErrorMessage message={errors.image.message} />
-                )}
-            </div>}
+            {update && (
+                <div className={styles.row}>
+                    <label htmlFor="img">Artist Image</label>
+                    <input
+                        type="file"
+                        id="img"
+                        className={styles.input}
+                        placeholder="Image"
+                        {...register('image', {
+                            required: {
+                                value: true,
+                                message: 'Image is Required!',
+                            },
+                            validate: {
+                                fileType: (file: FileList) =>
+                                    ['png', 'jpg', 'jpeg'].includes(
+                                        file[0].type
+                                            .split('/')[1]
+                                            .toLowerCase(),
+                                    ) || 'The file type should be Image',
+                            },
+                        })}
+                    />
+                    {errors.image?.message && (
+                        <ErrorMessage message={errors.image.message} />
+                    )}
+                </div>
+            )}
             <div className={styles.row}>
                 <label htmlFor="name" className={styles.label}>
                     Album Name
