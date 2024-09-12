@@ -23,12 +23,18 @@ const UserManagement: React.FC = () => {
     const [TextdrawMessage, setTextdrawMessage] = useState('');
 
     useEffect(() => {
+        const jwt = localStorage.getItem('user');
         const fetchUsers = async () => {
             setLoading(true);
             setError(null);
             try {
                 const response = await axios.get(
                     'https://back.chakrulos.ge/users',
+                    {
+                        headers: {
+                            Authorization: `Bearer ${jwt}`,
+                        },
+                    },
                 );
                 const usersData = response.data;
                 setUsers(usersData);
