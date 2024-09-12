@@ -63,8 +63,17 @@ const UserManagement: React.FC = () => {
     }, [lastUserBlocked]);
 
     const handleBlockUser = async (id: number, isBlocked: boolean) => {
+        const jwt = localStorage.getItem('user');
         try {
-            await axios.patch(`https://back.chakrulos.ge/users/block/${id}`);
+            await axios.patch(
+                `https://back.chakrulos.ge/users/block/${id}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`,
+                    },
+                },
+            );
             setUsers((prevUsers) =>
                 prevUsers.map((user) =>
                     user.id === id ? { ...user, isBlocked: !isBlocked } : user,
