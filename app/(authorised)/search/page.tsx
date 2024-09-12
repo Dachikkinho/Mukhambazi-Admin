@@ -102,6 +102,7 @@ const SearchPage = (props: Props) => {
                                     bgColor={''}
                                     img={artist.image}
                                     plays={'2'}
+                                    id={artist.id}
                                 />
                             </Link>
                         ))}
