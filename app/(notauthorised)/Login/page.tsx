@@ -12,6 +12,7 @@ import {
 } from '@/public/script';
 import { LoginForm } from '@/app/interfaces/login.interface';
 import axios from 'axios';
+
 import Link from 'next/link';
 import { useAuth } from '@/app/AuthContext';
 import useRedirectIfAuthenticated from '@/app/useRedirectIfAuthenticated';
@@ -49,19 +50,17 @@ const Login = () => {
                     if (error.response.status === 400) {
                         setError('email', {
                             type: 'manual',
-                            message:
-                                'Invalid email. Please try again.',
+                            message: 'Invalid email. Please try again.',
                         });
                         setError('password', {
                             type: 'manual',
-                            message:
-                                'Invalid password. Please try again.',
+                            message: 'Invalid password. Please try again.',
                         });
                     } else if (error.response.status === 401) {
-                        setError('submit', {
+                        setError('password', {
                             type: 'manual',
                             message:
-                                'Your account has been banned from CHAKRULOS!',
+                                'Your email has been banned from CHAKRULOS!',
                         });
                     } else {
                         console.error(

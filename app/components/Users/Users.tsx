@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from '../../(authorised)/UserManagement/page.module.scss';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import Textdraw from '../Textdraw/Textdraw';
 
 interface User {
     id: number;
@@ -18,6 +19,8 @@ const UserManagement: React.FC = () => {
     const [newPassword, setNewPassword] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [lastUserBlocked, setLastUserBlocked] = useState(0);
+    const [showTextdraw, setShowTextdraw] = useState(false);
+    const [TextdrawMessage, setTextdrawMessage] = useState('');
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -76,20 +79,16 @@ const UserManagement: React.FC = () => {
                 console.error('An unknown error occurred');
             }
         }
-        if (lastUserBlocked === 0) {
-            setLastUserBlocked(id);
-        } else {
-            setLastUserBlocked(0);
-        }
+        setLastUserBlocked(lastUserBlocked === 0 ? id : 0);
     };
 
     const handlePasswordChange = async (id: number) => {
         try {
-            await axios.patch(
-                `https://back.chakrulos.ge/users/password/${id}`,
-                { password: newPassword },
-            );
-            alert('Password changed successfully!');
+            await axios.patch(`https://back.chakrulos.ge/users/${id}`, {
+                password: newPassword,
+            });
+            setTextdrawMessage('Password changed successfully!');
+            setShowTextdraw(true);
             setSelectedUserId(null);
             setNewPassword('');
         } catch (error: unknown) {
@@ -221,6 +220,14 @@ const UserManagement: React.FC = () => {
                         )}
                     </tbody>
                 </table>
+            )}
+
+            {showTextdraw && (
+                <Textdraw
+                    message={TextdrawMessage}
+                    show={showTextdraw}
+                    onClose={() => setShowTextdraw(false)}
+                />
             )}
         </div>
     );
