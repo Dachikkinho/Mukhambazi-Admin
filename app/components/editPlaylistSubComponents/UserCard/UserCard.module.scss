@@ -1,0 +1,46 @@
+.card {
+    max-width: 370px;
+    width: 100%;
+    height: 250px;
+    background: linear-gradient(-45deg, rgba(227, 62, 159, 0.4) 0%, rgba(77, 37, 174, 0.4) 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        transform: scale(0.95);
+    }
+}
+
+.bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.image {
+    width: 60px;
+    height: 60px;
+}
+
+.email {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.active {
+    color: rgb(28, 160, 28);
+    font-weight: 700;
+}
+
+.blocked {
+    font-weight: 700;
+    color: rgb(171, 19, 19);
+}

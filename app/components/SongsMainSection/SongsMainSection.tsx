@@ -74,10 +74,8 @@ const SongsMainSection = () => {
                                     songs,
                                     setNextSongArr,
                                     setIsPlaying,
-                                    song.url,
-                                    song.name,
+                                    song,
                                     i,
-                                    song.image,
                                 )
                             }
                         />

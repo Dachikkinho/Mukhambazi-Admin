@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './CreatePopUp.module.scss';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { Done } from '../Done/Done';
 import { Playlist } from '@/app/interfaces/playlist.interface';
+import { Done } from '../Done/Done';
 
 interface Props {
     closeMenuFunction: () => void;
+    userId: number;
+    playlistId?: number;
 }
 
-const CreatePopUp = ({ closeMenuFunction }: Props) => {
+const CreatePopUp = ({ closeMenuFunction, userId, playlistId }: Props) => {
     const {
         reset,
         register,
@@ -18,11 +20,59 @@ const CreatePopUp = ({ closeMenuFunction }: Props) => {
     } = useForm<Playlist>();
     const [success, setSuccess] = useState(false);
 
+    useEffect(() => {
+        if (playlistId) {
+            axios
+                .get(`https://back.chakrulos.ge/playlist/${playlistId}`)
+                .then((res) => {
+                    reset(res.data);
+                });
+        }
+    }, []);
+
     function onSubmit(album: Playlist) {
-        axios.post('http://localhost:3001/playlist', album).then(() => {
-            reset();
-            setSuccess(true);
-        });
+        const user = localStorage.getItem('user');
+        if (playlistId) {
+            axios
+                .patch(
+                    `https://back.chakrulos.ge/playlist/${playlistId}`,
+                    album,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${user}`,
+                        },
+                    },
+                )
+                .then(() => {
+                    reset();
+                    setSuccess(true);
+                })
+                .catch((err) => {
+                    alert(err);
+                });
+        } else {
+            axios
+                .post(
+                    'https://back.chakrulos.ge/playlist',
+                    {
+                        description: album.description,
+                        title: album.title,
+                        userId: userId,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${user}`,
+                        },
+                    },
+                )
+                .then(() => {
+                    reset();
+                    setSuccess(true);
+                })
+                .catch((err) => {
+                    alert(err);
+                });
+        }
     }
 
     return (
@@ -32,12 +82,12 @@ const CreatePopUp = ({ closeMenuFunction }: Props) => {
             {success ? (
                 <div className={styles.doneContainer}>
                     <Done />
-                    <p>Created Succesfully!</p>
+                    <p>{playlistId ? 'Updated' : 'Created'} Succesfully!</p>
                     <button onClick={closeMenuFunction}>Close</button>
                 </div>
             ) : (
                 <div className={styles.mainContainer}>
-                    <h2 className={styles.heading}>New playlist</h2>
+                    <h2 className={styles.heading}>New Playlist</h2>
                     <form
                         className={styles.form}
                         onSubmit={handleSubmit(onSubmit)}
@@ -48,21 +98,21 @@ const CreatePopUp = ({ closeMenuFunction }: Props) => {
                                 type="text"
                                 className={styles.input}
                                 placeholder="Playlist Name"
-                                {...register('name', {
+                                {...register('title', {
                                     required: {
                                         value: true,
                                         message: 'Name Is Required!',
                                     },
                                     maxLength: {
-                                        value: 255,
+                                        value: 20,
                                         message:
-                                            "Name Can't Be Longer Than 255 Characters!",
+                                            "Name Can't Be Longer Than 20 Characters!",
                                     },
                                 })}
                             />
-                            {errors.name?.message && (
+                            {errors.title?.message && (
                                 <p className={styles.error}>
-                                    {errors.name.message}
+                                    {errors.title.message}
                                 </p>
                             )}
                         </div>
@@ -73,10 +123,14 @@ const CreatePopUp = ({ closeMenuFunction }: Props) => {
                                 className={styles.input}
                                 placeholder="Playlist Description"
                                 {...register('description', {
+                                    required: {
+                                        value: true,
+                                        message: 'Description Is Required!',
+                                    },
                                     maxLength: {
-                                        value: 500,
+                                        value: 40,
                                         message:
-                                            "Description Can't Be Longer Than 500 Characters!",
+                                            "Description Can't Be Longer Than 40 Characters!",
                                     },
                                 })}
                             />
@@ -89,7 +143,7 @@ const CreatePopUp = ({ closeMenuFunction }: Props) => {
                                 Cancel
                             </button>
                             <button className={styles.create} type="submit">
-                                Create
+                                {playlistId ? 'Update' : 'Create'}
                             </button>
                         </div>
                     </form>
