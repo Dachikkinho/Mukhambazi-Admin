@@ -2,6 +2,7 @@
 
 .mainContainer {
     padding: 0px 20px;
+    max-width: 100%;
     width: 100%;
     margin: 0 auto;
 }
@@ -9,7 +10,7 @@
 .container {
     padding: 10px 20px 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: right;
     align-items: center;
     margin-top: 10px;
     flex-wrap: wrap;
@@ -25,7 +26,9 @@
 .wrapper {
     margin: 0 auto;
     width: 100%;
-    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .newPlaylist {
@@ -111,6 +114,11 @@
     margin-top: 44px;
 }
 
+.noPlaylist {
+    color: #c338b5;
+    font-size: 20px;
+    font-weight: 600;
+}
 /* Desktop styles */
 @media (min-width: 1025px) {
     .span {
@@ -141,7 +149,6 @@
         height: 32.01px;
     }
 }
-
 
 .success {
     position: fixed;
@@ -180,7 +187,6 @@
     }
 }
 
-
 /* Tablet styles */
 @media (min-width: 601px) and (max-width: 1024px) {
     .span {
@@ -203,6 +209,39 @@
 
 @media screen and (max-width: 600px) {
     .mainContainer {
-        padding: 0px 0px;
+        padding: 0px 20px;
+    }
+
+    .container {
+        padding: 10px 20px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+}
+
+.wrap {
+    width: 100%;
+}
+
+.edit {
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    position: relative;
+    z-index: 2;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    vertical-align: middle;
+
+    &:hover {
+        background-color: rgba(128, 128, 128, 0.297);
     }
 }
