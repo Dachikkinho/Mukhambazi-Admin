@@ -51,18 +51,18 @@ const Login = () => {
                         setError('email', {
                             type: 'manual',
                             message:
-                                'Invalid email or password. Please try again.',
+                                'Invalid email. Please try again.',
                         });
                         setError('password', {
                             type: 'manual',
                             message:
-                                'Invalid email or password. Please try again.',
+                                'Invalid password. Please try again.',
                         });
                     } else if (error.response.status === 401) {
                         setError('email', {
                             type: 'manual',
                             message:
-                                'Unauthorized access. Please check your credentials.',
+                                'Your account has been banned from CHAKRULOS!',
                         });
                     } else {
                         console.error(

@@ -118,7 +118,7 @@ export const MusicFormFields = ({
 
         <div className={styles.row}>
             <label htmlFor="authorId" className={styles.label}>
-                Select Artist
+                Select Artist ID
             </label>
             <MusicSelect
                 register={register}
@@ -127,7 +127,7 @@ export const MusicFormFields = ({
             >
                 {artists.map((artist) => (
                     <option key={artist.id} value={artist.id}>
-                        {artist.firstName} {artist.lastName}
+                       {artist.id} | {artist.firstName} {artist.lastName}
                     </option>
                 ))}
             </MusicSelect>

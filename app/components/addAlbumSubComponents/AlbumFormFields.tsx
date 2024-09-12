@@ -121,7 +121,7 @@ export const AlbumFormFields = ({ register, errors, update }: Props) => {
 
             <div className={styles.row}>
                 <label htmlFor="authorId" className={styles.label}>
-                    AuthorName
+                    Author ID
                 </label>
                 <SelectAlbum
                     register={register}
@@ -132,7 +132,7 @@ export const AlbumFormFields = ({ register, errors, update }: Props) => {
 
                     {artists.map((artist) => (
                         <option value={artist.id}>
-                            {artist.firstName} {artist.lastName}
+                            {artist.id} | {artist.firstName} {artist.lastName} 
                         </option>
                     ))}
                 </SelectAlbum>
