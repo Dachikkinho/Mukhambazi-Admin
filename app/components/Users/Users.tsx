@@ -76,7 +76,7 @@ const UserManagement: React.FC = () => {
             );
             setUsers((prevUsers) =>
                 prevUsers.map((user) =>
-                    user.id === id ? { ...user, isBlocked: !isBlocked } : user,
+                    user.id === id ? { ...user, blocked: !isBlocked } : user,
                 ),
             );
         } catch (error: unknown) {
