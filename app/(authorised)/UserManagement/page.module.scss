@@ -20,6 +20,11 @@
     animation: fadeIn 0.5s ease-in;
 }
 
+.scroll {
+    width: 100%;
+    overflow-x: scroll;
+}
+
 .table {
     width: 100%;
     border-collapse: collapse;

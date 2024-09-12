@@ -117,109 +117,111 @@ const UserManagement: React.FC = () => {
             ) : error ? (
                 <p>{error}</p>
             ) : (
-                <table className={styles.table}>
-                    <thead>
-                        <tr>
-                            <th className={styles.tableHeader}>Email</th>
-                            <th className={styles.tableHeader}>Status</th>
-                            <th className={styles.tableHeader}>Actions</th>
-                            <th className={styles.tableHeader}>Password</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.length > 0 ? (
-                            users.map((user) => (
-                                <tr key={user.id}>
-                                    <td className={styles.tableCell}>
-                                        {user.email || 'Email not available'}
-                                    </td>
-                                    <td className={styles.tableCell}>
-                                        {user.blocked ? 'Blocked' : 'Active'}
-                                    </td>
-                                    <td className={styles.tableCell}>
-                                        <button
-                                            onClick={() =>
-                                                handleBlockUser(
-                                                    user.id,
-                                                    user.blocked,
-                                                )
-                                            }
-                                        >
-                                            {user.blocked ? 'Unblock' : 'Block'}
-                                        </button>
-                                    </td>
-                                    <td className={styles.tableCell}>
-                                        <button
-                                            onClick={() =>
-                                                setSelectedUserId(user.id)
-                                            }
-                                        >
-                                            Change Password
-                                        </button>
-                                        {selectedUserId === user.id && (
-                                            <div
-                                                className={
-                                                    styles.changePasswordWrapper
+                <div className={styles.scroll}>
+                    <table className={styles.table}>
+                        <thead>
+                            <tr>
+                                <th className={styles.tableHeader}>Email</th>
+                                <th className={styles.tableHeader}>Status</th>
+                                <th className={styles.tableHeader}>Actions</th>
+                                <th className={styles.tableHeader}>Password</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users.length > 0 ? (
+                                users.map((user) => (
+                                    <tr key={user.id}>
+                                        <td className={styles.tableCell}>
+                                            {user.email || 'Email not available'}
+                                        </td>
+                                        <td className={styles.tableCell}>
+                                            {user.blocked ? 'Blocked' : 'Active'}
+                                        </td>
+                                        <td className={styles.tableCell}>
+                                            <button
+                                                onClick={() =>
+                                                    handleBlockUser(
+                                                        user.id,
+                                                        user.blocked,
+                                                    )
                                                 }
                                             >
+                                                {user.blocked ? 'Unblock' : 'Block'}
+                                            </button>
+                                        </td>
+                                        <td className={styles.tableCell}>
+                                            <button
+                                                onClick={() =>
+                                                    setSelectedUserId(user.id)
+                                                }
+                                            >
+                                                Change Password
+                                            </button>
+                                            {selectedUserId === user.id && (
                                                 <div
                                                     className={
-                                                        styles.inputWrapper
+                                                        styles.changePasswordWrapper
                                                     }
                                                 >
-                                                    <input
-                                                        type={
-                                                            passwordVisible
-                                                                ? 'text'
-                                                                : 'password'
-                                                        }
-                                                        value={newPassword}
-                                                        onChange={(e) =>
-                                                            setNewPassword(
-                                                                e.target.value,
-                                                            )
-                                                        }
-                                                        placeholder="Enter new password"
-                                                    />
-                                                    <button
-                                                        type="button"
-                                                        onClick={
-                                                            togglePasswordVisibility
-                                                        }
+                                                    <div
                                                         className={
-                                                            styles.eyeButton
+                                                            styles.inputWrapper
                                                         }
                                                     >
-                                                        {passwordVisible ? (
-                                                            <FaEyeSlash />
-                                                        ) : (
-                                                            <FaEye />
-                                                        )}
+                                                        <input
+                                                            type={
+                                                                passwordVisible
+                                                                    ? 'text'
+                                                                    : 'password'
+                                                            }
+                                                            value={newPassword}
+                                                            onChange={(e) =>
+                                                                setNewPassword(
+                                                                    e.target.value,
+                                                                )
+                                                            }
+                                                            placeholder="Enter new password"
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={
+                                                                togglePasswordVisibility
+                                                            }
+                                                            className={
+                                                                styles.eyeButton
+                                                            }
+                                                        >
+                                                            {passwordVisible ? (
+                                                                <FaEyeSlash />
+                                                            ) : (
+                                                                <FaEye />
+                                                            )}
+                                                        </button>
+                                                    </div>
+                                                    <button
+                                                        onClick={() =>
+                                                            handlePasswordChange(
+                                                                user.id,
+                                                            )
+                                                        }
+                                                    >
+                                                        Submit
                                                     </button>
                                                 </div>
-                                                <button
-                                                    onClick={() =>
-                                                        handlePasswordChange(
-                                                            user.id,
-                                                        )
-                                                    }
-                                                >
-                                                    Submit
-                                                </button>
-                                            </div>
-                                        )}
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td className={styles.tableCell} colSpan={4}>
+                                        No users found
                                     </td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td className={styles.tableCell} colSpan={4}>
-                                    No users found
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             )}
 
             {showTextdraw && (
