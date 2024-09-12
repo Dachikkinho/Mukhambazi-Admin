@@ -2,4 +2,5 @@ export interface LoginForm {
     email: string;
     password: string;
     rememberMe: boolean;
+    submit: boolean;
 }

@@ -12,7 +12,6 @@ import {
 } from '@/public/script';
 import { LoginForm } from '@/app/interfaces/login.interface';
 import axios from 'axios';
-
 import Link from 'next/link';
 import { useAuth } from '@/app/AuthContext';
 import useRedirectIfAuthenticated from '@/app/useRedirectIfAuthenticated';
@@ -59,7 +58,7 @@ const Login = () => {
                                 'Invalid password. Please try again.',
                         });
                     } else if (error.response.status === 401) {
-                        setError('email', {
+                        setError('submit', {
                             type: 'manual',
                             message:
                                 'Your account has been banned from CHAKRULOS!',
