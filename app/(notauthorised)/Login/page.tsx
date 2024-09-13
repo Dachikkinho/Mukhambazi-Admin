@@ -47,21 +47,23 @@ const Login = () => {
                 'https://back.chakrulos.ge/login',
                 values,
             );
-
             const { token, role } = response.data;
 
-            localStorage.setItem('user', JSON.stringify(response.data));
-            console.log(response);
             login(token, role);
-            router.push('/');
-            setNotification({
-                message: 'Login successful! Redirecting...',
-                type: 'success',
-            });
 
-            setTimeout(() => {
-                router.push('/');
-            }, 1000);
+            if (role === 'admin') {
+                setNotification({
+                    message: 'Admin login successful! Redirecting...',
+                    type: 'success',
+                });
+                window.location.href = 'https://admin.chakrulos.ge';
+            } else {
+                setNotification({
+                    message: 'Login successful! Redirecting...',
+                    type: 'success',
+                });
+                window.location.href = 'https://chakrulos.ge';
+            }
         } catch (error) {
             handleLoginError(error);
         }

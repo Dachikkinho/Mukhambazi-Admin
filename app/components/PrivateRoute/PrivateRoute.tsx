@@ -8,21 +8,15 @@ import styles from './PrivateRoute.module.scss';
 const PrivateRoute = ({ children }: { children: ReactNode }) => {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
-    const { isAuthenticated, userRole } = useAuth();
+    const { isAuthenticated } = useAuth();
 
     useEffect(() => {
         const checkAuthentication = async () => {
             const user = localStorage.getItem('user');
             if (!user) {
-
                 router.push('/login');
             } else {
-                const parsedUser = JSON.parse(user);
-                if (parsedUser.role !== 'admin') {
-                    window.location.href = 'https://chakrulos.ge';
-                } else {
-                    setLoading(false);
-                }
+                setLoading(false);
             }
         };
 
@@ -45,7 +39,7 @@ const PrivateRoute = ({ children }: { children: ReactNode }) => {
         );
     }
 
-    if (!isAuthenticated || userRole !== 'admin') {
+    if (!isAuthenticated) {
         return null;
     }
 
