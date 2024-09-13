@@ -72,7 +72,7 @@ const Login = () => {
                         });
                     } else {
                         setNotification({
-                            message: "You're Not and Admin!",
+                            message: "You're Not an Admin!",
                             type: 'error',
                         });
                     }
