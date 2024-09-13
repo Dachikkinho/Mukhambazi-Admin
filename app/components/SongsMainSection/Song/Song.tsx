@@ -41,13 +41,27 @@ const Song = ({ name, group, imageSrc, onClick, songUrl, id }: Props) => {
 
     return (
         <div className={styles.container}>
-            <img
-                src={imageSrc}
-                alt="song cover"
-                className={styles.imagePlaceHolder}
-                draggable={false}
-                onClick={onClick}
-            />
+            <div className={styles.imgCont}>
+                <img
+                    src={imageSrc}
+                    alt="song cover"
+                    className={styles.imagePlaceHolder}
+                    draggable={false}
+                    onClick={onClick}
+                />
+                <div className={styles.like}>
+                    <LikeButton songId={id} />
+                </div>
+                <Link href={`/addMusic?id=${id}`} className={styles.editButton}>
+                    <img
+                        src="/icons/edit.svg"
+                        alt="edit"
+                        className={styles.edit}
+                        width={20}
+                        height={20}
+                    />
+                </Link>
+            </div>
             <div className={styles.info}>
                 <p onClick={onClick} className={styles.name}>
                     {name}
@@ -65,18 +79,6 @@ const Song = ({ name, group, imageSrc, onClick, songUrl, id }: Props) => {
             <div className={styles.add}>
                 <AddSongButton songId={id} />
             </div>
-            <div className={styles.like}>
-                <LikeButton songId={id} />
-            </div>
-            <Link href={`/addMusic?id=${id}`} className={styles.editButton}>
-                <img
-                    src="/icons/edit.svg"
-                    alt="edit"
-                    className={styles.edit}
-                    width={20}
-                    height={20}
-                />
-            </Link>
         </div>
     );
 };
