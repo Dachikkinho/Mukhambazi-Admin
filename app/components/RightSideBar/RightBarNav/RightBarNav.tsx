@@ -5,7 +5,6 @@ import styles from './RightBarNav.module.scss';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/app/AuthContext';
 
-
 const toggleDropdown = (
     isDropdownOpen: boolean,
     setIsDropdownOpen: React.Dispatch<React.SetStateAction<boolean>>,
@@ -31,7 +30,7 @@ export function RightBarNav() {
 
     const handleLogout = () => {
         logout();
-        router.push('/login');
+        router.push('/Login');
     };
 
     useEffect(() => {

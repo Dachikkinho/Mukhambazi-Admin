@@ -16,6 +16,7 @@ const SongsMainSection = () => {
     const setNextSongArr = useSetRecoilState(nextSongArrState);
 
     useEffect(() => {
+        const jwt = localStorage.getItem('user');
         axios
             .get('https://back.chakrulos.ge/music', {
                 onDownloadProgress: (progressEvent) => {
@@ -24,10 +25,10 @@ const SongsMainSection = () => {
                     if (total) {
                         const percentage = Math.floor((loaded / total) * 100);
                         setProgress(percentage);
-                        console.log(
-                            `Downloaded: ${Math.floor((loaded / total) * 100)}%`,
-                        );
                     }
+                },
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
                 },
             })
             .then((res) => {
@@ -67,8 +68,8 @@ const SongsMainSection = () => {
                             group={`${song.author.firstName} ${song.author.lastName}`}
                             songUrl={song.url}
                             imageSrc={song.image}
-                            key={i}
                             id={song.id}
+                            key={i}
                             onClick={() =>
                                 playMusic(
                                     songs,

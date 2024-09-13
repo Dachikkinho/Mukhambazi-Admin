@@ -1,10 +1,10 @@
 import styles from './Select.module.scss';
-import { ReactNode } from 'react';
+import { ReactNode, ChangeEventHandler } from 'react';
 
 type Props = {
     children: ReactNode;
     className?: string;
-    onChange?: any;
+    onChange?: ChangeEventHandler<HTMLSelectElement>;
 };
 
 export function Select({ children, className, onChange }: Props) {

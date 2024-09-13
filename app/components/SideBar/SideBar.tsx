@@ -10,8 +10,8 @@ import SideBarNav from './SideBarNav/SideBarNav';
 import SidebarSelected from './SidebarSelected/SidebarSelected';
 
 export function SideBar() {
-    const [isActive, setIsActive] = useRecoilState(sideBarOpenState);
-    const [isAdmin, setIsAdmin] = useRecoilState(isAdminState);
+    const [isActive] = useRecoilState(sideBarOpenState);
+    const [isAdmin] = useRecoilState(isAdminState);
 
     return (
         <aside className={`${styles.sidebar} ${isActive && styles.active}`}>

@@ -19,8 +19,13 @@ const DeletePopUp = ({
     confirm,
 }: Props) => {
     function deleteBackend() {
+        const jwt = localStorage.getItem('user');
         axios
-            .delete(deleteString)
+            .delete(deleteString, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            })
             .then(() => {
                 confirm();
             })
@@ -45,13 +50,13 @@ const DeletePopUp = ({
                                 className={`${styles.button} ${styles.no}`}
                                 onClick={closeFunc}
                             >
-                                no
+                                No
                             </button>
                             <button
                                 className={`${styles.button} ${styles.yes}`}
                                 onClick={deleteBackend}
                             >
-                                yes
+                                Yes
                             </button>
                         </div>
                     </div>

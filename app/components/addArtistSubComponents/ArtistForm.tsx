@@ -41,9 +41,15 @@ const ArtistForm = () => {
     }, [id]);
 
     const fetchAuthorData = async (id: string) => {
+        const jwt = localStorage.getItem('user');
         try {
             const response = await axios.get(
                 `https://mukhambazi-back.onrender.com/authors/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`,
+                    },
+                },
             );
             reset(response.data);
         } catch (error) {
@@ -73,6 +79,7 @@ const ArtistForm = () => {
     };
 
     const createAuthor = async (author: CreateAuthor) => {
+        const jwt = localStorage.getItem('user');
         await axios.post(
             'https://mukhambazi-back.onrender.com/authors/',
             {
@@ -88,14 +95,24 @@ const ArtistForm = () => {
             {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${jwt}`,
                 },
             },
         );
     };
 
     const updateAuthor = async (id: string, author: UpdateAuthor) => {
+        const jwt = localStorage.getItem('user');
         await axios
-            .patch(`https://mukhambazi-back.onrender.com/authors/${id}`, author)
+            .patch(
+                `https://mukhambazi-back.onrender.com/authors/${id}`,
+                author,
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`,
+                    },
+                },
+            )
             .then((res) => {
                 console.log(author);
             });
