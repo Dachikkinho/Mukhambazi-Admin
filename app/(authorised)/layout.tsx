@@ -50,26 +50,6 @@ export default function RootLayout({
         refreshInterval: 1000,
     });
 
-    const checkAdmin = () => {
-        const jwt = localStorage.getItem('user');
-        axios
-            .get(`https://back.chakrulos.ge/users/me`, {
-                headers: {
-                    Authorization: `Bearer ${jwt}`,
-                },
-            })
-            .then((res) => {
-                console.log(res);
-
-                if (res.data.role !== 'admin') {
-                    logout();
-                    router.push(`https://chakrulos.ge`);
-                }
-            });
-    };
-
-    useEffect(() => checkAdmin(), []);
-
     return (
         <>
             <div className={`main-components-container`}>

@@ -39,6 +39,8 @@ const Login = () => {
         type: 'success' | 'error' | 'info';
     } | null>(null);
 
+    const [userRole, setUserRole] = useState<string>();
+
     const onLoginFinished = async (values: LoginForm) => {
         try {
             setNotification({ message: 'Processing login...', type: 'info' });
@@ -48,19 +50,36 @@ const Login = () => {
                 values,
             );
 
-            localStorage.setItem('user', JSON.stringify(response.data));
-            console.log(response);
+            await axios
+                .get(`https://back.chakrulos.ge/users/me`, {
+                    headers: {
+                        Authorization: `Bearer ${response.data}`,
+                    },
+                })
+                .then((res) => {
+                    if (res.data.role === 'admin') {
+                        localStorage.setItem(
+                            'user',
+                            JSON.stringify(response.data),
+                        );
+                        console.log(response);
 
-            login(response.data);
-            router.push('/');
-            setNotification({
-                message: 'Login successful! Redirecting...',
-                type: 'success',
-            });
-
-            setTimeout(() => {
-                router.push('/');
-            }, 1000);
+                        login(response.data);
+                        router.push('/');
+                        setNotification({
+                            message: 'Login successful! Redirecting...',
+                            type: 'success',
+                        });
+                    } else {
+                        setNotification({
+                            message: "You're Not and Admin!",
+                            type: 'error',
+                        });
+                    }
+                    setTimeout(() => {
+                        router.push('/');
+                    }, 1000);
+                });
         } catch (error) {
             handleLoginError(error);
         }
