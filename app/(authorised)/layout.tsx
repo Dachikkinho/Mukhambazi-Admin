@@ -17,8 +17,6 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     const sideBarOpen = useRecoilState(sideBarOpenState)[0];
-    const router = useRouter();
-    const { logout } = useAuth();
 
     useEffect(() => {
         if (sideBarOpen) {
@@ -29,26 +27,16 @@ export default function RootLayout({
         }
     }, [sideBarOpen]);
 
+    const router = useRouter();
+    const { logout } = useAuth();
+
     const fetcher = async (url: string) => {
         const jwt = localStorage.getItem('user');
-        if (!jwt) {
-            router.push('https://chakrulos.ge');
-            return;
-        }
-
         const { data } = await axios.get(url, {
             headers: {
                 Authorization: `Bearer ${jwt}`,
             },
         });
-
-        if (data.role === 'admin') {
-            router.push('https://admin.chakrulos.ge');
-            return;
-        } else {
-            data.role !== 'admin';
-            router.push('https://chakrulos.ge');
-        }
 
         if (data.blocked) {
             logout();
@@ -61,6 +49,26 @@ export default function RootLayout({
     useSWR('https://back.chakrulos.ge/users/me', fetcher, {
         refreshInterval: 1000,
     });
+
+    const checkAdmin = () => {
+        const jwt = localStorage.getItem('user');
+        axios
+            .get(`https://back.chakrulos.ge/users/me`, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            })
+            .then((res) => {
+                console.log(res);
+
+                if (res.data.role !== 'admin') {
+                    logout();
+                    router.push(`https://chakrulos.ge`);
+                }
+            });
+    };
+
+    useEffect(() => checkAdmin, []);
 
     return (
         <>
