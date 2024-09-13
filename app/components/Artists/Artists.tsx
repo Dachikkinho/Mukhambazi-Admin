@@ -116,7 +116,7 @@ const ArtistsPage = () => {
                                     bgColor={'rgb(130 74 145)'}
                                     name={`${artist.firstName} ${artist.lastName}`}
                                     pfp={artist.image}
-                                    plays={'2'}
+                                    plays={artist.listens}
                                     id={artist.id}
                                 />
                             </Link>
@@ -140,7 +140,7 @@ const ArtistsPage = () => {
                                     bgColor={'rgb(130 74 145)'}
                                     name={`${artist.firstName} ${artist.lastName}`}
                                     pfp={artist.image}
-                                    plays={'2'}
+                                    plays={artist.listens}
                                     id={artist.id}
                                 />
                             </Link>
@@ -164,7 +164,7 @@ const ArtistsPage = () => {
                                     bgColor={'rgb(130 74 145)'}
                                     name={`${artist.firstName} ${artist.lastName}`}
                                     pfp={artist.image}
-                                    plays={'2'}
+                                    plays={artist.listens}
                                     id={artist.id}
                                 />
                             </Link>

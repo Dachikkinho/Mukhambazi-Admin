@@ -5,4 +5,6 @@ export interface Artists {
     biography: string;
     image: string;
     country: string;
+    listens: number;
+
 }
