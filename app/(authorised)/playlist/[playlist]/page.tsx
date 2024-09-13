@@ -34,8 +34,13 @@ const Playlist = () => {
     const [musicId, setMusicId] = useState(0);
 
     async function fetch() {
+        const jwt = localStorage.getItem('user');
         await axios
-            .get(`https://mukhambazi-back.onrender.com/playlist/${id}`)
+            .get(`https://mukhambazi-back.onrender.com/playlist/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            })
             .then((res) => {
                 setPlaylist(res.data);
             });
@@ -51,7 +56,7 @@ const Playlist = () => {
                 },
             })
             .then((res) => {
-                setUserId(res.data.user.id);
+                setUserId(res.data.id);
             });
     }, [id, create, deleteMusic]);
 

@@ -14,9 +14,16 @@ const PlaylistUsers = () => {
     const [users, setUsers] = useState<User[]>([]);
 
     useEffect(() => {
-        axios.get('https://mukhambazi-back.onrender.com/users').then((res) => {
-            setUsers(res.data);
-        });
+        const jwt = localStorage.getItem('user');
+        axios
+            .get('https://mukhambazi-back.onrender.com/users', {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            })
+            .then((res) => {
+                setUsers(res.data);
+            });
     }, []);
 
     return (

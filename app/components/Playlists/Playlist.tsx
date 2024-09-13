@@ -25,8 +25,8 @@ const Playlist = () => {
                 },
             })
             .then((res) => {
-                setPlaylists([...res.data.playlist]);
-                setUserId(res.data.user.id);
+                setPlaylists([...res.data.playlists]);
+                setUserId(res.data.id);
             });
     }, [create, popUpOpen]);
 

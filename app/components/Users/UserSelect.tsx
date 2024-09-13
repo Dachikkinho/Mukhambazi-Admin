@@ -14,5 +14,6 @@ export const UserSelect = ({ onChange }: Props) => (
         <option selected value="/UserManagement">
             User Menu
         </option>
+        <option value="/editPlaylists">Edit Playlists</option>
     </Select>
 );

@@ -22,22 +22,28 @@ const EditPlaylist = () => {
     const [playlists, setPlaylits] = useState<Playlist[]>([]);
     const [user, setUser] = useState<User>();
     useEffect(() => {
+        const accessToken = localStorage.getItem('user');
         axios
             .get(`https://mukhambazi-back.onrender.com/playlist/user`, {
                 params: {
                     id: id,
                 },
+
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
             })
             .then((res) => {
-                console.log(res);
                 setPlaylits([...res.data]);
             });
 
         axios
-            .get(`https://mukhambazi-back.onrender.com/users/${id}`)
+            .get(`https://mukhambazi-back.onrender.com/users/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
             .then((res) => {
-                console.log(res.data);
-
                 setUser(res.data);
             });
     }, []);
@@ -49,7 +55,7 @@ const EditPlaylist = () => {
     };
     return (
         <div className={styles.mainWrapper}>
-            <PlaylistSelect onChange={onChange} />
+            <PlaylistSelect />
             <div className={styles.cont}>
                 <div className={styles.heading}>
                     <img
@@ -76,7 +82,9 @@ const EditPlaylist = () => {
                             </Link>
                         ))
                     ) : (
-                        <p className={styles.noPlaylist}>This User Has No Playlists Yet!</p>
+                        <p className={styles.noPlaylist}>
+                            This User Has No Playlists Yet!
+                        </p>
                     )}
                 </div>
             </div>

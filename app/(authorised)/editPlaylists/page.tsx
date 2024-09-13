@@ -15,14 +15,10 @@ export default function AddArtist() {
         document.title = 'Chakrulos | AddAlbum';
     }, []);
 
-    const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        router.push(e.target.value);
-    };
-
     return (
         <PrivateRoute>
             <div className={styles.mainWrapper}>
-                <PlaylistSelect onChange={onChange} />
+                <PlaylistSelect />
                 <div className={styles.container}>
                     <PlaylistUsers />
                 </div>
