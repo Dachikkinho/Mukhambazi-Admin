@@ -66,10 +66,16 @@ const Song = ({ name, group, imageSrc, onClick, songUrl, id }: Props) => {
                 <AddSongButton songId={id} />
             </div>
             <div className={styles.like}>
-                <LikeButton />
+                <LikeButton songId={id} />
             </div>
             <Link href={`/addMusic?id=${id}`} className={styles.editButton}>
-                <img src="/icons/edit.svg" alt="edit" className={styles.edit} width={20} height={20} />
+                <img
+                    src="/icons/edit.svg"
+                    alt="edit"
+                    className={styles.edit}
+                    width={20}
+                    height={20}
+                />
             </Link>
         </div>
     );
