@@ -68,7 +68,7 @@ export default function RootLayout({
             });
     };
 
-    useEffect(() => checkAdmin, []);
+    useEffect(() => checkAdmin(), []);
 
     return (
         <>
