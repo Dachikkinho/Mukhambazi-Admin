@@ -48,10 +48,10 @@ const Login = () => {
                 values,
             );
 
-            localStorage.setItem('user', JSON.stringify(response.data));
-            console.log(response);
+            const { token, role } = response.data;
 
-            login(response.data);
+            localStorage.setItem('user', JSON.stringify(response.data));
+            login(token, role);
             router.push('/');
             setNotification({
                 message: 'Login successful! Redirecting...',
