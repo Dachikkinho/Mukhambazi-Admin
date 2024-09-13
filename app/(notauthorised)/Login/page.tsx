@@ -51,6 +51,7 @@ const Login = () => {
             const { token, role } = response.data;
 
             localStorage.setItem('user', JSON.stringify(response.data));
+            console.log(response);
             login(token, role);
             router.push('/');
             setNotification({
