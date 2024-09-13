@@ -170,10 +170,17 @@ const MainPlayer = () => {
                     loopOff: (
                         <img
                             key="loopOff"
-                            src="/icons/playerIcons/repeat-single 1.svg"
+                            src="/icons/playerIcons/repeat-off.svg"
                             className={styles.loop}
                             alt="icon"
                             draggable={false}
+                        />
+                    ),
+                    loop: (
+                        <img
+                            src="/icons/playerIcons/repeat.svg"
+                            alt="icon"
+                            className={styles.loopanim}
                         />
                     ),
                 }}
