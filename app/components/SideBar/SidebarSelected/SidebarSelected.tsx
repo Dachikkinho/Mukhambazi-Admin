@@ -22,7 +22,7 @@ const SidebarSelected = () => {
             case '/songs':
                 setPosition('448px');
                 break;
-            case '/playlist':
+            case path.startsWith('/playlist') ? path : '':
                 setPosition('402px');
                 break;
             case '/favorites':
@@ -38,6 +38,9 @@ const SidebarSelected = () => {
                 setPosition('623px');
                 break;
             case path.startsWith('/editPlaylists') ? path : '':
+                setPosition('623px');
+                break;
+            case path.startsWith('/UserManagement') ? path : '':
                 setPosition('623px');
                 break;
             default:
