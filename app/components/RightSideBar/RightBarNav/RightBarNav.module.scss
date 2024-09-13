@@ -14,7 +14,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1.5px solid $purple-400;
+    border: 2px solid rgba(178,53,166,.7);
     cursor: pointer;
     transition: all 0.3s ease;
 
@@ -27,10 +27,6 @@
     &:hover {
         background-color: $gray-100;
     }
-}
-
-.userMenu {
-    position: relative;
 }
 
 .userPfp {
@@ -47,9 +43,13 @@
 
     img {
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
+        width: 45px;
+        height: 45px;
     }
+}
+
+.userMenu {
+    position: relative;
 }
 
 .dropdownMenu {
@@ -106,5 +106,9 @@
         button {
             transform: translate(0, 0);
         }
+    }
+
+    .navButton {
+        border: 3px solid rgba(178,53,166,.7);
     }
 }

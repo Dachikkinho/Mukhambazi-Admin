@@ -30,7 +30,7 @@ export function RightBarNav() {
 
     const handleLogout = () => {
         logout();
-        router.push('/Login');
+        router.push('/login');
     };
 
     useEffect(() => {
@@ -77,7 +77,7 @@ export function RightBarNav() {
                     }
                 >
                     <img
-                        src="/icons/user.png"
+                        src="/user.png"
                         alt="User Profile"
                         draggable={false}
                         height={50}

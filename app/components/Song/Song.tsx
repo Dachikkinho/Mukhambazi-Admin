@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import PlayNowButton from './PlayNow/PlayNow';
 import styles from './Song.module.scss';
 
@@ -8,6 +9,7 @@ type Props = {
     width: string;
     height: string;
     duration: string;
+    id: number;
 };
 
 const Music = ({
@@ -17,6 +19,7 @@ const Music = ({
     width,
     height,
     duration,
+    id,
 }: Props) => {
     return (
         <main className={styles.Container}>
@@ -34,6 +37,13 @@ const Music = ({
                     <h4 className={styles.Music}>{duration}</h4>
                     <PlayNowButton />
                 </div>
+                <Link href={`/addMusic?id=${id}`} className={styles.editButton}>
+                    <img
+                        src="/icons/edit.svg"
+                        alt="edit"
+                        className={styles.edit}
+                    />
+                </Link>
             </div>
         </main>
     );
