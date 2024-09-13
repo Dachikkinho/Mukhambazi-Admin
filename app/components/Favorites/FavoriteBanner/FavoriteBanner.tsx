@@ -20,6 +20,7 @@ const FavoriteBanner = (props: Props) => {
                     src={props.banner}
                     draggable={false}
                     onClick={props.play}
+                    
                 />
                 <div className={styles.title}>
                     <h4>{props.title}</h4>

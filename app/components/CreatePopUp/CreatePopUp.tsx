@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import styles from './CreatePopUp.module.scss';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { Playlist } from '@/app/interfaces/playlist.interface';
 import Done from '../Done/Done';
+import { Playlist } from '@/app/interfaces/playlist.interface';
 
 interface Props {
     closeMenuFunction: () => void;
@@ -31,9 +31,6 @@ const CreatePopUp = ({ closeMenuFunction, userId, playlistId }: Props) => {
                 })
                 .then((res) => {
                     reset(res.data);
-                })
-                .catch((err) => {
-                    alert(err);
                 });
         }
     }, []);

@@ -62,6 +62,7 @@ const EditPlaylist = () => {
                         src="/icons/user-solid.svg"
                         alt=""
                         className={styles.image}
+                        draggable={false}
                     />
                     <p>{user?.email}'s Playlists</p>
                 </div>

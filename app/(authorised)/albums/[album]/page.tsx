@@ -84,6 +84,7 @@ const AlbumArtist = () => {
                                     className={styles.img}
                                     src="/images/play.png"
                                     alt="icon"
+                                    draggable={false}
                                 />
                             </div>
                         </div>

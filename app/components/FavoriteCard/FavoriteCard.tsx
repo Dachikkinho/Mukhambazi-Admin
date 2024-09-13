@@ -16,7 +16,7 @@ const FavoriteCard = ({ title, banner, icon, width, height }: Props) => {
                 <div>
                     <h4>{title}</h4>
                 </div>
-                <img src={icon} alt="icon" width={width} height={height} />
+                <img src={icon} alt="icon" width={width} height={height} draggable={false} />
             </div>
         </div>
     );

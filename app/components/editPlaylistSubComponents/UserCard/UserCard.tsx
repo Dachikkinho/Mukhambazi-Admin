@@ -20,6 +20,7 @@ const UserCard = ({ email, blocked, active, id }: Props) => {
                     src="/icons/user-solid.svg"
                     alt=""
                     className={styles.image}
+                    draggable={false}
                 />
             </div>
             <div className={styles.bottom}>

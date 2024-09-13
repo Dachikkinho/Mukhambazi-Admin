@@ -59,6 +59,7 @@ const Song = ({ name, group, imageSrc, onClick, songUrl, id }: Props) => {
                         className={styles.edit}
                         width={20}
                         height={20}
+                        draggable={false}
                     />
                 </Link>
             </div>

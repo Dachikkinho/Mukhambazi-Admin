@@ -42,6 +42,7 @@ const Music = ({
                         src="/icons/edit.svg"
                         alt="edit"
                         className={styles.edit}
+                        draggable={false}
                     />
                 </Link>
             </div>

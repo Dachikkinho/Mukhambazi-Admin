@@ -1,4 +1,4 @@
-@import "../../Colors/Color.scss";
+@import '../../Colors/Color.scss';
 
 .overlay {
     height: 100vh;
@@ -10,7 +10,7 @@
     z-index: 12;
 
     animation: fade 0.2s 0s 1 forwards;
-    
+
     @keyframes fade {
         from {
             opacity: 0;
@@ -24,7 +24,7 @@
 
 .mainContainer {
     max-width: 640px;
-    width: 100%;
+    width: 97%;
     background-color: rgba(255, 255, 255, 0.118);
     backdrop-filter: blur(30px);
     position: fixed;
@@ -39,7 +39,7 @@
     flex-direction: column;
     padding: 20px;
     animation: scale 0.5s 0s 1 forwards;
-    
+
     @keyframes scale {
         from {
             transform: translate(-50%, -50%) scale(0, 0);
@@ -78,9 +78,12 @@
     padding: 20px;
 
     p {
-        font-size: 40px;
-        color: white;
+        font-size: 32px;
+        color: #fff;
         font-weight: 700;
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
 
     button {
@@ -100,7 +103,7 @@
         &:hover {
             filter: brightness(1.1);
         }
-        }
+    }
 }
 
 .form {
