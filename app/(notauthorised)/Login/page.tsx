@@ -47,23 +47,20 @@ const Login = () => {
                 'https://back.chakrulos.ge/login',
                 values,
             );
-            const { token, role } = response.data;
 
-            login(token, role);
+            localStorage.setItem('user', JSON.stringify(response.data));
+            console.log(response);
 
-            if (role === 'admin') {
-                setNotification({
-                    message: 'Admin login successful! Redirecting...',
-                    type: 'success',
-                });
-                window.location.href = 'https://admin.chakrulos.ge';
-            } else {
-                setNotification({
-                    message: 'Login successful! Redirecting...',
-                    type: 'success',
-                });
-                window.location.href = 'https://chakrulos.ge';
-            }
+            login(response.data);
+            router.push('/');
+            setNotification({
+                message: 'Login successful! Redirecting...',
+                type: 'success',
+            });
+
+            setTimeout(() => {
+                router.push('/');
+            }, 1000);
         } catch (error) {
             handleLoginError(error);
         }
@@ -84,10 +81,28 @@ const Login = () => {
                         message: 'Invalid email or password. Please try again.',
                     });
                 } else if (axiosError.response.status === 401) {
-                    setError('password', {
-                        type: 'manual',
-                        message: 'Your email has been banned from CHAKRULOS!',
-                    });
+                    console.log(axiosError.response);
+                    if (
+                        (axiosError.response?.data as { message?: string })
+                            ?.message === 'USER IS BLOCKED'
+                    ) {
+                        setError('password', {
+                            type: 'manual',
+                            message:
+                                'Your email has been banned from CHAKRULOS!',
+                        });
+                    } else {
+                        setError('email', {
+                            type: 'manual',
+                            message:
+                                'Invalid email or password. Please try again.',
+                        });
+                        setError('password', {
+                            type: 'manual',
+                            message:
+                                'Invalid email or password. Please try again.',
+                        });
+                    }
                 } else {
                     console.error(
                         'An error occurred during login:',
