@@ -3,16 +3,15 @@
 import styles from './page.module.scss';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import AlbumForm from '@/app/components/addAlbumSubComponents/AlbumForm';
 import PrivateRoute from '@/app/components/PrivateRoute/PrivateRoute';
 import { PlaylistSelect } from '@/app/components/editPlaylistSubComponents/PlaylistSelect';
 import PlaylistUsers from '@/app/components/editPlaylistSubComponents/PlaylistUsers';
 
-export default function AddArtist() {
+export default function editPlaylist() {
     const router = useRouter();
 
     useEffect(() => {
-        document.title = 'Chakrulos | AddAlbum';
+        document.title = 'Chakrulos | editPlaylist';
     }, []);
 
     return (
