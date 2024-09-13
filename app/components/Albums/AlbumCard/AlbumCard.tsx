@@ -13,7 +13,7 @@ const Albumcard = ({ name, lastName, plays, image, id }: Props) => {
     return (
         <div className={styles.wrap}>
             <Link href={`/addAlbum?id=${id}`} className={styles.editButton}>
-                <img src="/icons/edit.svg" alt="edit" className={styles.edit} />
+                <img src="/icons/edit.svg" alt="edit" className={styles.edit} width={20} height={20} />
             </Link>
             <div className={styles.artists}>
                 <div className={styles.containers}>

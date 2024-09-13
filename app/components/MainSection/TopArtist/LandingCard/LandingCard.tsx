@@ -13,7 +13,7 @@ const LandingCard = ({ bgColor, name, plays, img, id }: Props) => {
     return (
         <div className={styles.wrap}>
             <Link href={`/addArtist?id=${id}`} className={styles.editButton}>
-                <img src="/icons/edit.svg" alt="edit" className={styles.edit} />
+                <img src="/icons/edit.svg" alt="edit" className={styles.edit} width={20} height={20} />
             </Link>
             <div
                 className={styles.mainContainer}

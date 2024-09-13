@@ -13,7 +13,7 @@ const ArtistCard = ({ bgColor, name, plays, pfp, id }: Props) => {
     return (
         <div className={styles.wrap}>
             <Link href={`/addArtist?id=${id}`} className={styles.editButton}>
-                <img src="/icons/edit.svg" alt="" />
+                <img src="/icons/edit.svg" alt="edit" width={20} height={20} />
             </Link>
             <div
                 className={styles.card}

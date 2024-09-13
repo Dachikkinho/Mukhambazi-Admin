@@ -69,7 +69,7 @@ const Song = ({ name, group, imageSrc, onClick, songUrl, id }: Props) => {
                 <LikeButton />
             </div>
             <Link href={`/addMusic?id=${id}`} className={styles.editButton}>
-                <img src="/icons/edit.svg" alt="edit" className={styles.edit} />
+                <img src="/icons/edit.svg" alt="edit" className={styles.edit} width={20} height={20} />
             </Link>
         </div>
     );
