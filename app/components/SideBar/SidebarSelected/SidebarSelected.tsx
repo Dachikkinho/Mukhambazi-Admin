@@ -37,7 +37,7 @@ const SidebarSelected = () => {
             case '/addMusic':
                 setPosition('623px');
                 break;
-                case '/UserManagement':
+            case path.startsWith('/editPlaylists') ? path : '':
                 setPosition('623px');
                 break;
             default:

@@ -14,5 +14,6 @@ export const MusicSelect = ({ onChange }: Props) => (
             Add New Music
         </option>
         <option value="/UserManagement">User Menu</option>
+        <option value="/editPlaylists">Edit Playlists</option>
     </Select>
 );
