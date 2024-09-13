@@ -1,17 +1,21 @@
-@import '/app/Colors/Color.scss';
+@import '../../../Colors/Color.scss';
 
 .artists {
     display: flex;
     align-items: center;
+    max-width: 502px;
+    width: 100%;
+    position: relative;
 }
 
 .containers {
-    width: 100%;
     cursor: pointer;
     transition: all 0.3s;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    max-width: 512px;
+    width: 100%;
 }
 
 .containers:hover {
@@ -31,6 +35,7 @@
     font-weight: 500;
     line-height: 29.05px;
     text-align: left;
+
     color: $purple-600;
 }
 
@@ -43,10 +48,12 @@
 }
 
 .img {
-    max-width: 512px;
+    max-width: 100%;
     border-radius: 15px;
     height: 256px;
 }
+
+
 
 @media screen and (max-width: 576px) {
     .img {
@@ -80,6 +87,7 @@
         top: 10px;
         right: 10px;
         z-index: 2;
+
 
         &:hover {
             background-color: rgba(128, 128, 128, 0.258);
