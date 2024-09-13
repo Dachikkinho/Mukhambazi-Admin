@@ -14,7 +14,7 @@ const PrivateRoute = ({ children }: { children: ReactNode }) => {
         const checkAuthentication = async () => {
             const user = localStorage.getItem('user');
             if (!user) {
-                router.push('/login');
+                router.push('/Login');
             } else {
                 setLoading(false);
             }

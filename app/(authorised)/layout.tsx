@@ -40,7 +40,7 @@ export default function RootLayout({
 
         if (data.blocked) {
             logout();
-            router.push('/login');
+            router.push('/Login');
         }
 
         return data;

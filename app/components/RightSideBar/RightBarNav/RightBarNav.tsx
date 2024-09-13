@@ -30,7 +30,7 @@ export function RightBarNav() {
 
     const handleLogout = () => {
         logout();
-        router.push('/login');
+        router.push('/Login');
     };
 
     useEffect(() => {

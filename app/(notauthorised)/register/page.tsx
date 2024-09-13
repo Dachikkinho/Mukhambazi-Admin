@@ -49,7 +49,7 @@ const Signup = () => {
                 type: 'success',
             });
             setTimeout(() => {
-                router.push('/login');
+                router.push('/Login');
             }, 1000);
         } catch (error) {
             console.error('Registration error:', error);
@@ -221,7 +221,7 @@ const Signup = () => {
                 <div className={styles.flex}>
                     <span>
                         Already a member?
-                        <Link href="/login">
+                        <Link href="/Login">
                             <span className={styles.login}> Log in</span>
                         </Link>
                     </span>
