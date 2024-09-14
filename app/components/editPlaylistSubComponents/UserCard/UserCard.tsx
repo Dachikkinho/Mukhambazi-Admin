@@ -30,7 +30,7 @@ const UserCard = ({ email, blocked, active, id }: Props) => {
                 ) : (
                     <p className={styles.active}>Active</p>
                 )}
-                <p>Active Since: {formattedDate}</p>
+                <p className={styles.activeSince}>Active Since: {formattedDate}</p>
             </div>
         </Link>
     );

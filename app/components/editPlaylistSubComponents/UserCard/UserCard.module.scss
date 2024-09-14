@@ -23,6 +23,9 @@
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    max-width: 370px;
+    width: 100%;
+    text-align: center;
 }
 
 .image {
@@ -43,4 +46,22 @@
 .blocked {
     font-weight: 700;
     color: rgb(171, 19, 19);
+}
+
+@media screen and (max-width: 400px) {
+    .email {
+        font-size: 13px;
+    }
+
+    .active {
+        font-size: 10px;
+    }
+
+    .blocked {
+        font-size: 10px;
+    }
+
+    .activeSince {
+        font-size: 10px;
+    }
 }
