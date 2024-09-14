@@ -15,6 +15,24 @@ const AddSongButton = ({ songId }: Props) => {
     const [open, setOpen] = useState(false);
     const [success, setSuccess] = useState(false);
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
+    const [exists, setExists] = useState(false);
+
+    function hasDuplicateId(
+        musics: {
+            id: number;
+        }[],
+    ) {
+        const seen = new Set();
+
+        for (const music of musics) {
+            if (seen.has(music.id)) {
+                return true;
+            }
+            seen.add(music.id);
+        }
+
+        return false;
+    }
 
     function upload(id: number) {
         const jwt = localStorage.getItem('user');
@@ -30,9 +48,13 @@ const AddSongButton = ({ songId }: Props) => {
                     },
                 },
             )
-            .then(() => {
+            .then((res) => {
                 setOpen(false);
-                setSuccess(true);
+                if (hasDuplicateId(res.data.musics)) {
+                    setExists(true);
+                } else {
+                    setSuccess(true);
+                }
             });
     }
 
@@ -66,6 +88,12 @@ const AddSongButton = ({ songId }: Props) => {
                 <div className={styles.success}>Added Succesfully!</div>
             )}
 
+            {exists && (
+                <div className={styles.exists}>
+                    Music Is Already In Playlist!
+                </div>
+            )}
+
             <button
                 className={styles.button}
                 onClick={() => {
@@ -73,7 +101,12 @@ const AddSongButton = ({ songId }: Props) => {
                     setPopUpOpen(true);
                 }}
             >
-                <img src="/icons/add-song.svg" alt="" className={styles.icon} draggable={false} />
+                <img
+                    src="/icons/add-song.svg"
+                    alt=""
+                    className={styles.icon}
+                    draggable={false}
+                />
             </button>
 
             {open && (
@@ -108,8 +141,7 @@ const AddSongButton = ({ songId }: Props) => {
 
                         <div>
                             <div className={styles.playlist}>
-                                <div
-                                >
+                                <div>
                                     {playlists.length ? (
                                         playlists.map((playlist, i) => (
                                             <div
